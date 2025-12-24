@@ -41,6 +41,14 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet";
 
 export const Playground = () => {
     // Card State
@@ -71,6 +79,9 @@ export const Playground = () => {
 
     // Popover State
     const [popoverAlign, setPopoverAlign] = useState<"center" | "start" | "end">("center");
+
+    // Sheet State
+    const [sheetSide, setSheetSide] = useState<"top" | "right" | "bottom" | "left">("right");
 
     const { toast } = useToast();
     const [activeTab, setActiveTab] = useState("card");
@@ -142,6 +153,18 @@ export const Playground = () => {
     </div>
   </PopoverContent>
 </Popover>`;
+        } else if (activeTab === "sheet") {
+            code = `<Sheet>
+  <SheetTrigger>Open</SheetTrigger>
+  <SheetContent side="${sheetSide}">
+    <SheetHeader>
+      <SheetTitle>Edit profile</SheetTitle>
+      <SheetDescription>
+        Make changes to your profile here.
+      </SheetDescription>
+    </SheetHeader>
+  </SheetContent>
+</Sheet>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -171,7 +194,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-2xl grid-cols-7">
+                        <TabsList className="grid w-full max-w-3xl grid-cols-8">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -179,6 +202,7 @@ export const Playground = () => {
                             <TabsTrigger value="dialog">Dialog</TabsTrigger>
                             <TabsTrigger value="accordion">Accordion</TabsTrigger>
                             <TabsTrigger value="popover">Popover</TabsTrigger>
+                            <TabsTrigger value="sheet">Sheet</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -706,6 +730,82 @@ export const Playground = () => {
                                     </Popover>
                                     <p className="mt-8 text-sm text-muted-foreground">
                                         Click to see popover content
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+                    {/* SHEET TAB */}
+                    <TabsContent value="sheet">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <Label className="flex items-center gap-2 mb-4">
+                                        <Maximize2 className="w-4 h-4" /> Side
+                                    </Label>
+                                    <RadioGroup
+                                        value={sheetSide}
+                                        onValueChange={(v) => setSheetSide(v as "top" | "right" | "bottom" | "left")}
+                                        className="grid grid-cols-2 gap-4"
+                                    >
+                                        {["top", "right", "bottom", "left"].map((side) => (
+                                            <div key={side} className="flex items-center space-x-2">
+                                                <RadioGroupItem value={side} id={`side-${side}`} />
+                                                <Label htmlFor={`side-${side}`} className="capitalize">{side}</Label>
+                                            </div>
+                                        ))}
+                                    </RadioGroup>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button
+                                        onClick={() => setSheetSide("right")}
+                                        variant="outline"
+                                        className="flex-1"
+                                    >
+                                        Reset
+                                    </Button>
+                                    <Button onClick={copyCode} className="flex-1 gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <div className="text-center">
+                                    <Sheet>
+                                        <SheetTrigger asChild>
+                                            <Button variant="outline">Open Sheet ({sheetSide})</Button>
+                                        </SheetTrigger>
+                                        <SheetContent side={sheetSide}>
+                                            <SheetHeader>
+                                                <SheetTitle>Edit profile</SheetTitle>
+                                                <SheetDescription>
+                                                    Make changes to your profile here. Click save when you're done.
+                                                </SheetDescription>
+                                            </SheetHeader>
+                                            <div className="grid gap-4 py-4">
+                                                <div className="grid grid-cols-4 items-center gap-4">
+                                                    <Label htmlFor="name" className="text-right">
+                                                        Name
+                                                    </Label>
+                                                    <Input id="name" value="Pedro Duarte" className="col-span-3" />
+                                                </div>
+                                                <div className="grid grid-cols-4 items-center gap-4">
+                                                    <Label htmlFor="username" className="text-right">
+                                                        Username
+                                                    </Label>
+                                                    <Input id="username" value="@peduarte" className="col-span-3" />
+                                                </div>
+                                            </div>
+                                        </SheetContent>
+                                    </Sheet>
+                                    <p className="mt-8 text-sm text-muted-foreground">
+                                        Click to open the side drawer
                                     </p>
                                 </div>
                             </div>
