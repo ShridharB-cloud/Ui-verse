@@ -18,7 +18,8 @@ import {
     Maximize2,
     Type,
     TextCursorInput,
-    Ban
+    Ban,
+    MessageSquare
 } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
@@ -36,6 +37,11 @@ export const Playground = () => {
     const [inputType, setInputType] = useState<"text" | "password" | "email">("text");
     const [inputPlaceholder, setInputPlaceholder] = useState("Enter text...");
     const [inputDisabled, setInputDisabled] = useState(false);
+
+    // Toast State
+    const [toastTitle, setToastTitle] = useState("Notification");
+    const [toastDesc, setToastDesc] = useState("Action completed successfully.");
+    const [toastVariant, setToastVariant] = useState<"default" | "destructive">("default");
 
     const { toast } = useToast();
     const [activeTab, setActiveTab] = useState("card");
@@ -66,6 +72,12 @@ export const Playground = () => {
   placeholder="${inputPlaceholder}" 
   ${inputDisabled ? "disabled" : ""} 
 />`;
+        } else if (activeTab === "toast") {
+            code = `toast({
+  title: "${toastTitle}",
+  description: "${toastDesc}",
+  variant: "${toastVariant}"
+});`
         }
 
         navigator.clipboard.writeText(code);
@@ -95,10 +107,11 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-md grid-cols-3">
+                        <TabsList className="grid w-full max-w-md grid-cols-4">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
+                            <TabsTrigger value="toast">Toast</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -330,6 +343,99 @@ export const Playground = () => {
                                         disabled={inputDisabled}
                                         className="w-full bg-background"
                                     />
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+                    {/* TOAST TAB */}
+                    <TabsContent value="toast">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <Label className="flex items-center gap-2">
+                                        <Type className="w-4 h-4" /> Message Title
+                                    </Label>
+                                    <Input
+                                        value={toastTitle}
+                                        onChange={(e) => setToastTitle(e.target.value)}
+                                        placeholder="Toast title..."
+                                        className="bg-secondary/50"
+                                    />
+                                </div>
+
+                                <div className="space-y-4">
+                                    <Label className="flex items-center gap-2">
+                                        <TextCursorInput className="w-4 h-4" /> Message Description
+                                    </Label>
+                                    <Input
+                                        value={toastDesc}
+                                        onChange={(e) => setToastDesc(e.target.value)}
+                                        placeholder="Toast description..."
+                                        className="bg-secondary/50"
+                                    />
+                                </div>
+
+                                <div className="space-y-4">
+                                    <Label className="flex items-center gap-2 mb-4">
+                                        <Ban className="w-4 h-4" /> Variant
+                                    </Label>
+                                    <RadioGroup
+                                        value={toastVariant}
+                                        onValueChange={(v: "default" | "destructive") => setToastVariant(v)}
+                                        className="grid grid-cols-2 gap-4"
+                                    >
+                                        <div className="flex items-center space-x-2">
+                                            <RadioGroupItem value="default" id="tv-d" />
+                                            <Label htmlFor="tv-d">Default</Label>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <RadioGroupItem value="destructive" id="tv-dest" />
+                                            <Label htmlFor="tv-dest">Destructive</Label>
+                                        </div>
+                                    </RadioGroup>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button
+                                        onClick={() => {
+                                            setToastTitle("Notification");
+                                            setToastDesc("This is a toast message.");
+                                            setToastVariant("default");
+                                        }}
+                                        variant="outline"
+                                        className="flex-1"
+                                    >
+                                        Reset
+                                    </Button>
+                                    <Button onClick={copyCode} className="flex-1 gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <div className="text-center">
+                                    <Button
+                                        size="lg"
+                                        onClick={() => {
+                                            toast({
+                                                title: toastTitle,
+                                                description: toastDesc,
+                                                variant: toastVariant
+                                            })
+                                        }}
+                                        className="gap-2"
+                                    >
+                                        <MessageSquare className="w-4 h-4" />
+                                        Trigger Toast
+                                    </Button>
+                                    <p className="mt-4 text-sm text-muted-foreground">
+                                        Click to see the notification
+                                    </p>
                                 </div>
                             </div>
                         </div>
