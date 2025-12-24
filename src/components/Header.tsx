@@ -1,10 +1,20 @@
 import { motion } from "framer-motion";
-import { Command, Sparkles, Menu } from "lucide-react";
+import { Command, Sparkles, Menu, LogIn } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const triggerCommandPalette = () => {
+    const event = new KeyboardEvent("keydown", {
+      key: "k",
+      metaKey: true,
+      bubbles: true,
+    });
+    document.dispatchEvent(event);
+  };
 
   return (
     <motion.header
@@ -16,22 +26,23 @@ export const Header = () => {
       <div className="mx-4 mt-4">
         <nav className="glass-panel px-6 py-4 flex items-center justify-between">
           {/* Logo */}
-          <motion.div
-            className="flex items-center gap-3"
-            whileHover={{ scale: 1.02 }}
-          >
-            <div className="p-2 rounded-xl bg-gradient-to-br from-primary to-accent">
-              <Sparkles className="w-5 h-5 text-primary-foreground" />
-            </div>
-            <span className="text-xl font-bold text-gradient">UIverse</span>
-          </motion.div>
+          <Link to="/">
+            <motion.div
+              className="flex items-center gap-3 cursor-pointer"
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="p-2 rounded-xl bg-gradient-to-br from-primary via-accent to-primary glow-primary">
+                <Sparkles className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-xl font-bold text-gradient">UIverse</span>
+            </motion.div>
+          </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-8">
             <NavLink href="#features">Features</NavLink>
             <NavLink href="#playground">Playground</NavLink>
             <NavLink href="#docs">Docs</NavLink>
-            <NavLink href="#workspace">Workspace</NavLink>
           </div>
 
           {/* Actions */}
@@ -39,20 +50,29 @@ export const Header = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-lg bg-secondary hover:bg-secondary/80 transition-colors text-sm"
-              onClick={() => {
-                const event = new KeyboardEvent("keydown", {
-                  key: "k",
-                  metaKey: true,
-                });
-                document.dispatchEvent(event);
-              }}
+              className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors text-sm border border-border"
+              onClick={triggerCommandPalette}
             >
-              <Command className="w-4 h-4" />
+              <Command className="w-4 h-4 text-muted-foreground" />
               <span className="text-muted-foreground">Search</span>
-              <kbd className="px-1.5 py-0.5 text-xs bg-muted rounded">⌘K</kbd>
+              <kbd className="px-1.5 py-0.5 text-xs bg-background/50 rounded text-muted-foreground border border-border">
+                ⌘K
+              </kbd>
             </motion.button>
+            
             <ThemeToggle />
+            
+            <Link to="/auth">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary transition-colors text-sm font-medium border border-primary/20"
+              >
+                <LogIn className="w-4 h-4" />
+                Sign In
+              </motion.button>
+            </Link>
+
             <button
               className="md:hidden p-2 rounded-lg hover:bg-secondary transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -74,7 +94,12 @@ export const Header = () => {
               <MobileNavLink href="#features">Features</MobileNavLink>
               <MobileNavLink href="#playground">Playground</MobileNavLink>
               <MobileNavLink href="#docs">Docs</MobileNavLink>
-              <MobileNavLink href="#workspace">Workspace</MobileNavLink>
+              <Link
+                to="/auth"
+                className="px-4 py-2 rounded-lg bg-primary/10 text-primary font-medium text-center"
+              >
+                Sign In
+              </Link>
             </div>
           </motion.div>
         )}
@@ -86,10 +111,11 @@ export const Header = () => {
 const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
   <motion.a
     href={href}
-    className="text-muted-foreground hover:text-foreground transition-colors font-medium"
+    className="text-muted-foreground hover:text-foreground transition-colors font-medium relative group"
     whileHover={{ y: -2 }}
   >
     {children}
+    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-accent group-hover:w-full transition-all duration-300" />
   </motion.a>
 );
 

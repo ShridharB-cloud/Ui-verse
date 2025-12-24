@@ -12,7 +12,7 @@ export const ThemeToggle = () => {
   ] as const;
 
   return (
-    <div className="glass-panel p-1 flex gap-1">
+    <div className="glass-panel-subtle p-1 flex gap-1">
       {themes.map(({ value, icon: Icon, label }) => (
         <motion.button
           key={value}
@@ -29,7 +29,7 @@ export const ThemeToggle = () => {
           {theme === value && (
             <motion.div
               layoutId="theme-indicator"
-              className="absolute inset-0 bg-secondary rounded-lg"
+              className="absolute inset-0 bg-primary/10 rounded-lg border border-primary/20"
               transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
             />
           )}
