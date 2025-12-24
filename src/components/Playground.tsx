@@ -1,16 +1,19 @@
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { RotateCw, Palette, Zap } from "lucide-react";
+import { RotateCw, Palette, Zap, Copy } from "lucide-react";
 
 export const Playground = () => {
     const [rotation, setRotation] = useState([0]);
     const [scale, setScale] = useState([1]);
     const [isGlow, setIsGlow] = useState(false);
+    const { toast } = useToast();
+
 
     return (
         <section id="playground" className="py-24 relative overflow-hidden">
@@ -79,9 +82,34 @@ export const Playground = () => {
                                     setIsGlow(false);
                                 }}
                                 variant="outline"
-                                className="w-full"
+                                className="flex-1"
                             >
                                 Reset
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    const code = `
+<div style={{
+  transform: 'rotate(${rotation[0]}deg) scale(${scale[0]})',
+  transition: 'all 0.3s ease'
+}} className="w-48 h-48 flex items-center justify-center bg-background border-2 ${isGlow
+                                            ? "border-primary shadow-[0_0_50px_-12px_hsl(var(--primary))]"
+                                            : "border-border"
+                                        } rounded-xl">
+  <div className="text-center p-4">
+    <span className="font-bold text-lg">Interactive Card</span>
+  </div>
+</div>`;
+                                    navigator.clipboard.writeText(code);
+                                    toast({
+                                        title: "Code copied!",
+                                        description: "The CSS/JSX has been copied to your clipboard.",
+                                    });
+                                }}
+                                className="flex-1 gap-2"
+                            >
+                                <Copy className="w-4 h-4" />
+                                Copy Code
                             </Button>
                         </div>
                     </div>
@@ -98,8 +126,8 @@ export const Playground = () => {
                             transition={{ type: "spring", stiffness: 200, damping: 20 }}
                         >
                             <Card className={`w-48 h-48 flex items-center justify-center bg-background border-2 transition-all duration-300 ${isGlow
-                                    ? "border-primary shadow-[0_0_50px_-12px_hsl(var(--primary))]"
-                                    : "border-border"
+                                ? "border-primary shadow-[0_0_50px_-12px_hsl(var(--primary))]"
+                                : "border-border"
                                 }`}>
                                 <div className="text-center p-4">
                                     <Zap className={`w-12 h-12 mx-auto mb-2 transition-colors ${isGlow ? "text-primary" : "text-muted-foreground"
