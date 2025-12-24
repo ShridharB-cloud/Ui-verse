@@ -47,6 +47,7 @@ import {
     MenubarTrigger,
 } from "@/components/ui/menubar";
 import {
+    /* Navigation Menu imports */
     NavigationMenu,
     NavigationMenuContent,
     NavigationMenuItem,
@@ -55,6 +56,15 @@ import {
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import {
+    Pagination,
+    PaginationContent,
+    PaginationEllipsis,
+    PaginationItem,
+    PaginationLink,
+    PaginationNext,
+    PaginationPrevious,
+} from "@/components/ui/pagination";
 import {
     RotateCw,
     Palette,
@@ -467,6 +477,31 @@ export const Playground = () => {
     </NavigationMenuItem>
   </NavigationMenuList>
 </NavigationMenu>`;
+        } else if (activeTab === "pagination") {
+            code = `<Pagination>
+  <PaginationContent>
+    <PaginationItem>
+      <PaginationPrevious href="#" />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">1</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#" isActive>
+        2
+      </PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">3</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationEllipsis />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationNext href="#" />
+    </PaginationItem>
+  </PaginationContent>
+</Pagination>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -496,7 +531,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[150rem] grid-cols-[repeat(25,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[155rem] grid-cols-[repeat(26,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -522,6 +557,7 @@ export const Playground = () => {
                             <TabsTrigger value="context-menu">Context Menu</TabsTrigger>
                             <TabsTrigger value="menubar">Menubar</TabsTrigger>
                             <TabsTrigger value="navigation-menu">Navigation Menu</TabsTrigger>
+                            <TabsTrigger value="pagination">Pagination</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -2154,6 +2190,60 @@ export const Playground = () => {
                                         </NavigationMenuItem>
                                     </NavigationMenuList>
                                 </NavigationMenu>
+                            </div>
+                        </div>
+                    </TabsContent>
+
+                    {/* PAGINATION TAB */}
+                    <TabsContent value="pagination">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" />
+                                        <Label>Navigation</Label>
+                                    </div>
+                                    <p className="text-muted-foreground">
+                                        Pagination with page navigation, next and previous links.
+                                    </p>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <Pagination>
+                                    <PaginationContent>
+                                        <PaginationItem>
+                                            <PaginationPrevious href="#" />
+                                        </PaginationItem>
+                                        <PaginationItem>
+                                            <PaginationLink href="#">1</PaginationLink>
+                                        </PaginationItem>
+                                        <PaginationItem>
+                                            <PaginationLink href="#" isActive>
+                                                2
+                                            </PaginationLink>
+                                        </PaginationItem>
+                                        <PaginationItem>
+                                            <PaginationLink href="#">3</PaginationLink>
+                                        </PaginationItem>
+                                        <PaginationItem>
+                                            <PaginationEllipsis />
+                                        </PaginationItem>
+                                        <PaginationItem>
+                                            <PaginationNext href="#" />
+                                        </PaginationItem>
+                                    </PaginationContent>
+                                </Pagination>
                             </div>
                         </div>
                     </TabsContent>
