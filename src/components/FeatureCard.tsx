@@ -17,6 +17,7 @@ import { InfiniteScrollDemo } from "./features/InfiniteScrollDemo";
 import { ToastDemo } from "./features/ToastDemo";
 import { AccordionDemo } from "./features/AccordionDemo";
 import { HelpDemo } from "./features/HelpDemo";
+import { ErrorDemo } from "./features/ErrorDemo";
 import { FontFamilyDemo } from "./features/FontFamilyDemo";
 import { LayoutDemo } from "./features/LayoutDemo";
 import { InteractionDemo } from "./features/InteractionDemo";
@@ -46,6 +47,7 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
   const [showToastDemo, setShowToastDemo] = useState(false);
   const [showAccordionDemo, setShowAccordionDemo] = useState(false);
   const [showHelpDemo, setShowHelpDemo] = useState(false);
+  const [showErrorDemo, setShowErrorDemo] = useState(false);
   const [showLayoutDemo, setShowLayoutDemo] = useState(false);
   const [showInteractionDemo, setShowInteractionDemo] = useState(false);
   const [showStateDemo, setShowStateDemo] = useState(false);
@@ -137,6 +139,10 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       setShowHelpDemo(true);
       return;
     }
+    if (feature.title.includes("Error") || feature.title.includes("Boundary")) {
+      setShowErrorDemo(true);
+      return;
+    }
 
     // Layout & Navigation group
     if (feature.title.includes("Layout") || feature.title.includes("Grid") || feature.title.includes("Sidebar") || feature.title.includes("Panel") || feature.title.includes("Nav") || feature.title.includes("Header") || feature.title.includes("Footer") || feature.title.includes("List") || feature.title.includes("Table") || feature.title.includes("Sort") || feature.title.includes("Filter") || feature.title.includes("Search") || feature.title.includes("Infinite") || feature.title.includes("Lazy") || feature.title.includes("Orientation")) {
@@ -197,6 +203,9 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       )}
       {(feature.title.includes("Help") || feature.title.includes("Hint")) && (
         <HelpDemo open={showHelpDemo} onOpenChange={setShowHelpDemo} />
+      )}
+      {(feature.title.includes("Error") || feature.title.includes("Boundary")) && (
+        <ErrorDemo open={showErrorDemo} onOpenChange={setShowErrorDemo} />
       )}
 
       <LayoutDemo open={showLayoutDemo} onOpenChange={setShowLayoutDemo} title={feature.title} />

@@ -33,6 +33,8 @@ import ToastDemoCode from "./ToastDemo.tsx?raw";
 import AccordionDemoCode from "./AccordionDemo.tsx?raw";
 // @ts-ignore
 import HelpDemoCode from "./HelpDemo.tsx?raw";
+// @ts-ignore
+import ErrorDemoCode from "./ErrorDemo.tsx?raw";
 
 export const featureCodeMap: Record<string, string> = {
   // Specific Demos
@@ -71,7 +73,6 @@ export const featureCodeMap: Record<string, string> = {
   "ARIA State Indicators": InteractionDemoCode,
   "Device-Adaptive UI": InteractionDemoCode,
   "Context-Aware Help Hints": HelpDemoCode,
-  "Skeleton Loaders": InteractionDemoCode,
 
   // State Demos
   "Auto-Save Indicator": StateDemoCode,
@@ -84,7 +85,7 @@ export const featureCodeMap: Record<string, string> = {
   "Battery Saver UI Mode": StateDemoCode,
   "Network-Aware UI": StateDemoCode,
   "Offline UI Indicator": StateDemoCode,
-  "Error Boundary UI": StateDemoCode,
+  "Error Boundary UI": ErrorDemoCode,
   "Feature Flag UI": StateDemoCode,
   "Role-Based UI Visibility": StateDemoCode,
 };
