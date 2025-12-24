@@ -4,6 +4,15 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -126,6 +135,9 @@ export const Playground = () => {
     const [switchChecked, setSwitchChecked] = useState(false);
     const [switchLabel, setSwitchLabel] = useState("Airplane Mode");
     const [switchDisabled, setSwitchDisabled] = useState(false);
+
+    // Select State
+    const [selectValue, setSelectValue] = useState("");
 
     const { toast } = useToast();
     const [activeTab, setActiveTab] = useState("card");
@@ -262,6 +274,22 @@ export const Playground = () => {
   <Switch id="airplane-mode"${switchDisabled ? ' disabled' : ''} />
   <Label htmlFor="airplane-mode">${switchLabel}</Label>
 </div>`;
+        } else if (activeTab === "select") {
+            code = `<Select>
+  <SelectTrigger className="w-[180px]">
+    <SelectValue placeholder="Select a fruit" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectGroup>
+      <SelectLabel>Fruits</SelectLabel>
+      <SelectItem value="apple">Apple</SelectItem>
+      <SelectItem value="banana">Banana</SelectItem>
+      <SelectItem value="blueberry">Blueberry</SelectItem>
+      <SelectItem value="grapes">Grapes</SelectItem>
+      <SelectItem value="pineapple">Pineapple</SelectItem>
+    </SelectGroup>
+  </SelectContent>
+</Select>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -291,7 +319,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[95rem] grid-cols-[repeat(14,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[100rem] grid-cols-[repeat(15,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -306,6 +334,7 @@ export const Playground = () => {
                             <TabsTrigger value="avatar">Avatar</TabsTrigger>
                             <TabsTrigger value="scroll">Scroll</TabsTrigger>
                             <TabsTrigger value="switch">Switch</TabsTrigger>
+                            <TabsTrigger value="select">Select</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -1242,6 +1271,55 @@ export const Playground = () => {
                                         disabled={switchDisabled}
                                     />
                                     <Label htmlFor="airplane-mode">{switchLabel}</Label>
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+                    {/* SELECT TAB */}
+                    <TabsContent value="select">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" />
+                                        <Label>Selected Value</Label>
+                                    </div>
+                                    <div className="p-4 rounded-md bg-muted/50 border font-mono text-sm">
+                                        {selectValue || "No selection"}
+                                    </div>
+                                    <p className="text-sm text-muted-foreground">
+                                        Select components are used for collecting user provided information from a list of options.
+                                    </p>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <div className="w-[180px]">
+                                    <Select value={selectValue} onValueChange={setSelectValue}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select a fruit" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectLabel>Fruits</SelectLabel>
+                                                <SelectItem value="apple">Apple</SelectItem>
+                                                <SelectItem value="banana">Banana</SelectItem>
+                                                <SelectItem value="blueberry">Blueberry</SelectItem>
+                                                <SelectItem value="grapes">Grapes</SelectItem>
+                                                <SelectItem value="pineapple">Pineapple</SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
                                 </div>
                             </div>
                         </div>
