@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -24,6 +24,7 @@ import {
     CollapsibleContent,
     CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { Progress } from "@/components/ui/progress";
 import {
     RotateCw,
     Palette,
@@ -161,6 +162,14 @@ export const Playground = () => {
 
     // Collapsible State
     const [isOpen, setIsOpen] = useState(false);
+
+    // Progress State
+    const [progress, setProgress] = React.useState(13);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setProgress(66), 500);
+        return () => clearTimeout(timer);
+    }, []);
 
     const { toast } = useToast();
     const [activeTab, setActiveTab] = useState("card");
@@ -387,6 +396,8 @@ export const Playground = () => {
     </div>
   </CollapsibleContent>
 </Collapsible>`;
+        } else if (activeTab === "progress") {
+            code = `<Progress value={33} />`;
         }
 
         navigator.clipboard.writeText(code);
@@ -416,7 +427,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[130rem] grid-cols-[repeat(21,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[135rem] grid-cols-[repeat(22,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -438,6 +449,7 @@ export const Playground = () => {
                             <TabsTrigger value="tabs">Tabs</TabsTrigger>
                             <TabsTrigger value="textarea">Textarea</TabsTrigger>
                             <TabsTrigger value="collapsible">Collapsible</TabsTrigger>
+                            <TabsTrigger value="progress">Progress</TabsTrigger>
                         </TabsList>
                     </div>
 
