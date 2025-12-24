@@ -145,6 +145,9 @@ export const Playground = () => {
     // Checkbox State
     const [checkboxChecked, setCheckboxChecked] = useState(false);
 
+    // Radio Group State
+    const [radioValue, setRadioValue] = useState("comfortable");
+
     const { toast } = useToast();
     const [activeTab, setActiveTab] = useState("card");
 
@@ -308,6 +311,21 @@ export const Playground = () => {
     Accept terms and conditions
   </label>
 </div>`;
+        } else if (activeTab === "radio") {
+            code = `<RadioGroup defaultValue="comfortable">
+  <div className="flex items-center space-x-2">
+    <RadioGroupItem value="default" id="r1" />
+    <Label htmlFor="r1">Default</Label>
+  </div>
+  <div className="flex items-center space-x-2">
+    <RadioGroupItem value="comfortable" id="r2" />
+    <Label htmlFor="r2">Comfortable</Label>
+  </div>
+  <div className="flex items-center space-x-2">
+    <RadioGroupItem value="compact" id="r3" />
+    <Label htmlFor="r3">Compact</Label>
+  </div>
+</RadioGroup>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -337,7 +355,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[110rem] grid-cols-[repeat(17,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[115rem] grid-cols-[repeat(18,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -355,6 +373,7 @@ export const Playground = () => {
                             <TabsTrigger value="select">Select</TabsTrigger>
                             <TabsTrigger value="slider">Slider</TabsTrigger>
                             <TabsTrigger value="checkbox">Checkbox</TabsTrigger>
+                            <TabsTrigger value="radio">Radio</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -1428,6 +1447,54 @@ export const Playground = () => {
                                             You agree to our Terms of Service and Privacy Policy.
                                         </p>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+                    {/* RADIO GROUP TAB */}
+                    <TabsContent value="radio">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" />
+                                        <Label>Selected Option</Label>
+                                    </div>
+                                    <div className="p-4 rounded-md bg-muted/50 border font-mono text-sm capitalize">
+                                        {radioValue}
+                                    </div>
+                                    <p className="text-sm text-muted-foreground">
+                                        Radio Groups allows the user to select one option from a set.
+                                    </p>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <div className="p-6 bg-background/50 rounded-lg border backdrop-blur-sm">
+                                    <RadioGroup value={radioValue} onValueChange={setRadioValue}>
+                                        <div className="flex items-center space-x-2">
+                                            <RadioGroupItem value="default" id="r1" />
+                                            <Label htmlFor="r1">Default</Label>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <RadioGroupItem value="comfortable" id="r2" />
+                                            <Label htmlFor="r2">Comfortable</Label>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <RadioGroupItem value="compact" id="r3" />
+                                            <Label htmlFor="r3">Compact</Label>
+                                        </div>
+                                    </RadioGroup>
                                 </div>
                             </div>
                         </div>
