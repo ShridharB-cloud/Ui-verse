@@ -20,6 +20,11 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
     RotateCw,
     Palette,
     Zap,
@@ -32,6 +37,7 @@ import {
     MessageSquare,
     AlertCircle,
     Info,
+    ChevronsUpDown,
 } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
@@ -152,6 +158,9 @@ export const Playground = () => {
     // Textarea State
     const [textareaValue, setTextareaValue] = useState("");
     const [textareaDisabled, setTextareaDisabled] = useState(false);
+
+    // Collapsible State
+    const [isOpen, setIsOpen] = useState(false);
 
     const { toast } = useToast();
     const [activeTab, setActiveTab] = useState("card");
@@ -353,6 +362,31 @@ export const Playground = () => {
   <Label htmlFor="message">Your message</Label>
   <Textarea placeholder="Type your message here." id="message"${textareaDisabled ? ' disabled' : ''} />
 </div>`;
+        } else if (activeTab === "collapsible") {
+            code = `<Collapsible>
+  <div className="flex items-center justify-between space-x-4 px-4 py-2">
+    <h4 className="text-sm font-semibold">
+      @peduarte starred 3 repositories
+    </h4>
+    <CollapsibleTrigger asChild>
+      <Button variant="ghost" size="sm" className="w-9 p-0">
+        <ChevronsUpDown className="h-4 w-4" />
+        <span className="sr-only">Toggle</span>
+      </Button>
+    </CollapsibleTrigger>
+  </div>
+  <div className="rounded-md border px-4 py-3 font-mono text-sm">
+    @radix-ui/primitives
+  </div>
+  <CollapsibleContent className="space-y-2">
+    <div className="rounded-md border px-4 py-3 font-mono text-sm">
+      @radix-ui/colors
+    </div>
+    <div className="rounded-md border px-4 py-3 font-mono text-sm">
+      @stitches/react
+    </div>
+  </CollapsibleContent>
+</Collapsible>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -382,7 +416,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[125rem] grid-cols-[repeat(20,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[130rem] grid-cols-[repeat(21,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -403,6 +437,7 @@ export const Playground = () => {
                             <TabsTrigger value="radio">Radio</TabsTrigger>
                             <TabsTrigger value="tabs">Tabs</TabsTrigger>
                             <TabsTrigger value="textarea">Textarea</TabsTrigger>
+                            <TabsTrigger value="collapsible">Collapsible</TabsTrigger>
                         </TabsList>
                     </div>
 
