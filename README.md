@@ -21,7 +21,41 @@ The heart of UIverse. Tweak values and get production-ready code instantly.
 3.  **Input**: Test toggles for `type` (text/password), `placeholder`, and `disabled` state.
 4.  **Toast**: Configure and trigger dynamic toast notifications.
 5.  **Dialog**: Customize and open modal dialogs.
-6.  **Code Copy**: One-click copy for generic JSX/CSS.
+6.  **Accordion**: Expandable content sections.
+7.  **Popover**: Pop-up content for small overlays.
+8.  **Sheet**: Sliding drawers/panels.
+9.  **Alert Dialog**: Critical confirmation modals.
+10. **Tooltip**: Hover info bubbles.
+11. **Badge**: Status indicators and labels.
+12. **Avatar**: User profile image fallbacks.
+13. **Scroll Area**: Custom scrollable containers.
+14. **Switch**: Toggle controls (Airplane mode demo).
+15. **Select**: Dropdown menus for options.
+16. **Slider**: Range input control.
+17. **Checkbox**: Multi-selection toggles.
+18. **Radio Group**: Single selection choice groups.
+19. **Tabs**: Tabbed content navigation.
+20. **Textarea**: Multi-line text input.
+21. **Collapsible**: Expand/collapse panels (Radix driven).
+22. **Progress**: Loading bars with animation.
+23. **Context Menu**: Right-click custom menus.
+24. **Menubar**: Desktop-style menu bars.
+25. **Navigation Menu**: Modern mega-menus.
+26. **Pagination**: Page navigation controls.
+27. **Hover Card**: Preview cards on hover.
+28. **Resizable**: Resizable layouts.
+29. **Skeleton**: Loading placeholders.
+30. **Command**: Command Palette (Cmd+K interface).
+31. **Drawer**: Mobile-friendly bottom sheets.
+32. **Carousel**: Embla-powered slider.
+33. **Form**: Zod-validated input forms.
+34. **Input OTP**: One-Time Password segments.
+35. **Breadcrumb**: Path navigation.
+36. **Chart**: Recharts integration.
+37. **Sonner**: Stacked toast notifications.
+38. **Date Picker**: Calendar selection.
+39. **Toggle Group**: Grouped toggle buttons.
+40. **Code Copy**: One-click copy for generic JSX/CSS.
 
 ### Completeness
 - **Global Footer**: Consistent branding and links.
