@@ -856,6 +856,25 @@ export function InputForm() {
     <Bar dataKey="total" fill="#adfa1d" radius={[4, 4, 0, 0]} />
   </BarChart>
 </ResponsiveContainer>`;
+        } else if (activeTab === "sonner") {
+            code = `import { toast } from "sonner"
+
+// ...
+
+<Button
+  variant="outline"
+  onClick={() =>
+    toast("Event has been created", {
+      description: "Sunday, December 03, 2023 at 9:00 AM",
+      action: {
+        label: "Undo",
+        onClick: () => console.log("Undo"),
+      },
+    })
+  }
+>
+  Show Toast
+</Button>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -885,7 +904,7 @@ export function InputForm() {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[205rem] grid-cols-[repeat(36,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[210rem] grid-cols-[repeat(37,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -922,6 +941,7 @@ export function InputForm() {
                             <TabsTrigger value="input-otp">Input OTP</TabsTrigger>
                             <TabsTrigger value="breadcrumb">Breadcrumb</TabsTrigger>
                             <TabsTrigger value="chart">Chart</TabsTrigger>
+                            <TabsTrigger value="sonner">Sonner</TabsTrigger>
                         </TabsList>
                     </div>
 
