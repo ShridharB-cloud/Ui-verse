@@ -6,6 +6,8 @@ import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
     RotateCw,
@@ -13,7 +15,10 @@ import {
     Zap,
     Copy,
     MousePointerClick,
-    Maximize2
+    Maximize2,
+    Type,
+    TextCursorInput,
+    Ban
 } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
@@ -26,6 +31,11 @@ export const Playground = () => {
     // Button State
     const [btnVariant, setBtnVariant] = useState<"default" | "destructive" | "outline" | "secondary" | "ghost" | "link">("default");
     const [btnSize, setBtnSize] = useState<"default" | "sm" | "lg" | "icon">("default");
+
+    // Input State
+    const [inputType, setInputType] = useState<"text" | "password" | "email">("text");
+    const [inputPlaceholder, setInputPlaceholder] = useState("Enter text...");
+    const [inputDisabled, setInputDisabled] = useState(false);
 
     const { toast } = useToast();
     const [activeTab, setActiveTab] = useState("card");
@@ -50,6 +60,12 @@ export const Playground = () => {
             code = `<Button variant="${btnVariant}" size="${btnSize}">
   Click Me
 </Button>`;
+        } else if (activeTab === "input") {
+            code = `<Input 
+  type="${inputType}" 
+  placeholder="${inputPlaceholder}" 
+  ${inputDisabled ? "disabled" : ""} 
+/>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -79,9 +95,10 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-md grid-cols-2">
-                            <TabsTrigger value="card">Card Effect</TabsTrigger>
-                            <TabsTrigger value="button">Button Variants</TabsTrigger>
+                        <TabsList className="grid w-full max-w-md grid-cols-3">
+                            <TabsTrigger value="card">Card</TabsTrigger>
+                            <TabsTrigger value="button">Button</TabsTrigger>
+                            <TabsTrigger value="input">Input</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -238,6 +255,81 @@ export const Playground = () => {
                                     <Button variant={btnVariant} size={btnSize}>
                                         {btnSize === "icon" ? <Zap className="w-4 h-4" /> : "Click Me"}
                                     </Button>
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+                    {/* INPUT TAB */}
+                    <TabsContent value="input">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <Label className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" /> Type
+                                    </Label>
+                                    <RadioGroup
+                                        value={inputType}
+                                        onValueChange={(v: "text" | "password" | "email") => setInputType(v)}
+                                        className="grid grid-cols-3 gap-4"
+                                    >
+                                        {["text", "password", "email"].map((t) => (
+                                            <div key={t} className="flex items-center space-x-2">
+                                                <RadioGroupItem value={t} id={`t-${t}`} />
+                                                <Label htmlFor={`t-${t}`} className="capitalize">{t}</Label>
+                                            </div>
+                                        ))}
+                                    </RadioGroup>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <Label className="flex items-center gap-2">
+                                        <TextCursorInput className="w-4 h-4" /> Placeholder
+                                    </Label>
+                                    <Input
+                                        value={inputPlaceholder}
+                                        onChange={(e) => setInputPlaceholder(e.target.value)}
+                                        placeholder="Type placeholder text..."
+                                        className="bg-secondary/50"
+                                    />
+                                </div>
+
+                                <div className="flex items-center justify-between">
+                                    <Label className="flex items-center gap-2">
+                                        <Ban className="w-4 h-4" /> Disabled
+                                    </Label>
+                                    <Switch checked={inputDisabled} onCheckedChange={setInputDisabled} />
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button
+                                        onClick={() => {
+                                            setInputType("text");
+                                            setInputPlaceholder("Enter text...");
+                                            setInputDisabled(false);
+                                        }}
+                                        variant="outline"
+                                        className="flex-1"
+                                    >
+                                        Reset
+                                    </Button>
+                                    <Button onClick={copyCode} className="flex-1 gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <div className="w-full max-w-sm p-6">
+                                    <Input
+                                        type={inputType}
+                                        placeholder={inputPlaceholder}
+                                        disabled={inputDisabled}
+                                        className="w-full bg-background"
+                                    />
                                 </div>
                             </div>
                         </div>
