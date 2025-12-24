@@ -68,6 +68,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Badge } from "@/components/ui/badge";
 
 export const Playground = () => {
     // Card State
@@ -104,6 +105,10 @@ export const Playground = () => {
 
     // Tooltip State
     const [tooltipText, setTooltipText] = useState("Add to library");
+
+    // Badge State
+    const [badgeText, setBadgeText] = useState("New Feature");
+    const [badgeVariant, setBadgeVariant] = useState<"default" | "secondary" | "destructive" | "outline">("default");
 
     const { toast } = useToast();
     const [activeTab, setActiveTab] = useState("card");
@@ -214,6 +219,8 @@ export const Playground = () => {
     </TooltipContent>
   </Tooltip>
 </TooltipProvider>`;
+        } else if (activeTab === "badge") {
+            code = `<Badge variant="${badgeVariant}">${badgeText}</Badge>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -243,7 +250,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-5xl grid-cols-10">
+                        <TabsList className="grid w-full max-w-6xl grid-cols-11">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -254,6 +261,7 @@ export const Playground = () => {
                             <TabsTrigger value="sheet">Sheet</TabsTrigger>
                             <TabsTrigger value="alert">Alert</TabsTrigger>
                             <TabsTrigger value="tooltip">Tooltip</TabsTrigger>
+                            <TabsTrigger value="badge">Badge</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -967,6 +975,63 @@ export const Playground = () => {
                                     </TooltipProvider>
                                     <p className="mt-8 text-sm text-muted-foreground">
                                         Hover over the button to see the tooltip
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+                    {/* BADGE TAB */}
+                    <TabsContent value="badge">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <Label className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" /> Badge Text
+                                    </Label>
+                                    <Input
+                                        value={badgeText}
+                                        onChange={(e) => setBadgeText(e.target.value)}
+                                        placeholder="Enter badge text"
+                                        className="bg-background/50 border-white/10"
+                                    />
+                                </div>
+
+                                <div className="space-y-4">
+                                    <Label className="flex items-center gap-2 mb-4">
+                                        <Maximize2 className="w-4 h-4" /> Variant
+                                    </Label>
+                                    <RadioGroup
+                                        value={badgeVariant}
+                                        onValueChange={(v) => setBadgeVariant(v as "default" | "secondary" | "destructive" | "outline")}
+                                        className="grid grid-cols-2 gap-4"
+                                    >
+                                        {["default", "secondary", "destructive", "outline"].map((variant) => (
+                                            <div key={variant} className="flex items-center space-x-2">
+                                                <RadioGroupItem value={variant} id={`badge-${variant}`} />
+                                                <Label htmlFor={`badge-${variant}`} className="capitalize">{variant}</Label>
+                                            </div>
+                                        ))}
+                                    </RadioGroup>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <div className="text-center">
+                                    <Badge variant={badgeVariant} className="text-lg px-4 py-2">
+                                        {badgeText}
+                                    </Badge>
+                                    <p className="mt-8 text-sm text-muted-foreground">
+                                        Badges are used to highlight status, tags, or counts.
                                     </p>
                                 </div>
                             </div>
