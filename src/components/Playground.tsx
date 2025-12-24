@@ -97,6 +97,13 @@ import {
     DrawerTrigger,
 } from "@/components/ui/drawer";
 import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+} from "@/components/ui/carousel";
+import {
     RotateCw,
     Palette,
     Zap,
@@ -674,6 +681,24 @@ export const Playground = () => {
     </div>
   </DrawerContent>
 </Drawer>`;
+        } else if (activeTab === "carousel") {
+            code = `<Carousel className="w-full max-w-xs">
+  <CarouselContent>
+    {Array.from({ length: 5 }).map((_, index) => (
+      <CarouselItem key={index}>
+        <div className="p-1">
+          <Card>
+            <CardContent className="flex aspect-square items-center justify-center p-6">
+              <span className="text-4xl font-semibold">{index + 1}</span>
+            </CardContent>
+          </Card>
+        </div>
+      </CarouselItem>
+    ))}
+  </CarouselContent>
+  <CarouselPrevious />
+  <CarouselNext />
+</Carousel>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -703,7 +728,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[180rem] grid-cols-[repeat(31,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[185rem] grid-cols-[repeat(32,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -735,6 +760,7 @@ export const Playground = () => {
                             <TabsTrigger value="skeleton">Skeleton</TabsTrigger>
                             <TabsTrigger value="command">Command</TabsTrigger>
                             <TabsTrigger value="drawer">Drawer</TabsTrigger>
+                            <TabsTrigger value="carousel">Carousel</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -2666,6 +2692,53 @@ export const Playground = () => {
                                         </div>
                                     </DrawerContent>
                                 </Drawer>
+                            </div>
+                        </div>
+                    </TabsContent>
+
+                    {/* CAROUSEL TAB */}
+                    <TabsContent value="carousel">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" />
+                                        <Label>Display</Label>
+                                    </div>
+                                    <p className="text-muted-foreground">
+                                        A carousel with motion and swipe built using Embla.
+                                    </p>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <Carousel className="w-full max-w-xs">
+                                    <CarouselContent>
+                                        {Array.from({ length: 5 }).map((_, index) => (
+                                            <CarouselItem key={index}>
+                                                <div className="p-1">
+                                                    <Card>
+                                                        <CardContent className="flex aspect-square items-center justify-center p-6">
+                                                            <span className="text-4xl font-semibold">{index + 1}</span>
+                                                        </CardContent>
+                                                    </Card>
+                                                </div>
+                                            </CarouselItem>
+                                        ))}
+                                    </CarouselContent>
+                                    <CarouselPrevious />
+                                    <CarouselNext />
+                                </Carousel>
                             </div>
                         </div>
                     </TabsContent>
