@@ -104,6 +104,18 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel";
 import {
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import {
     RotateCw,
     Palette,
     Zap,
@@ -179,7 +191,31 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 
+export const formSchema = z.object({
+    username: z.string().min(2, {
+        message: "Username must be at least 2 characters.",
+    }),
+});
+
 export const Playground = () => {
+    // ... existing hooks
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            username: "",
+        },
+    });
+
+    function onFormSubmit(values: z.infer<typeof formSchema>) {
+        toast({
+            title: "You submitted the following values:",
+            description: (
+                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                    <code className="text-white">{JSON.stringify(values, null, 2)}</code>
+                </pre>
+            ),
+        });
+    }
     // Card State
     const [rotation, setRotation] = useState([0]);
     const [scale, setScale] = useState([1]);
@@ -699,6 +735,76 @@ export const Playground = () => {
   <CarouselPrevious />
   <CarouselNext />
 </Carousel>`;
+        } else if (activeTab === "form") {
+            code = `"use client"
+
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+
+import { Button } from "@/components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { toast } from "@/components/ui/use-toast"
+
+const FormSchema = z.object({
+  username: z.string().min(2, {
+    message: "Username must be at least 2 characters.",
+  }),
+})
+
+export function InputForm() {
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      username: "",
+    },
+  })
+
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    })
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
+  )
+}
+`;
         }
 
         navigator.clipboard.writeText(code);
@@ -728,7 +834,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[185rem] grid-cols-[repeat(32,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[190rem] grid-cols-[repeat(33,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -761,6 +867,7 @@ export const Playground = () => {
                             <TabsTrigger value="command">Command</TabsTrigger>
                             <TabsTrigger value="drawer">Drawer</TabsTrigger>
                             <TabsTrigger value="carousel">Carousel</TabsTrigger>
+                            <TabsTrigger value="form">Form</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -2739,6 +2846,57 @@ export const Playground = () => {
                                     <CarouselPrevious />
                                     <CarouselNext />
                                 </Carousel>
+                            </div>
+                        </div>
+                    </TabsContent>
+
+                    {/* FORM TAB */}
+                    <TabsContent value="form">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" />
+                                        <Label>Data Entry</Label>
+                                    </div>
+                                    <p className="text-muted-foreground">
+                                        Building forms with React Hook Form and Zod.
+                                    </p>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <Form {...form}>
+                                    <form onSubmit={form.handleSubmit(onFormSubmit)} className="w-full max-w-sm space-y-6">
+                                        <FormField
+                                            control={form.control}
+                                            name="username"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Username</FormLabel>
+                                                    <FormControl>
+                                                        <Input placeholder="shadcn" {...field} />
+                                                    </FormControl>
+                                                    <FormDescription>
+                                                        This is your public display name.
+                                                    </FormDescription>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <Button type="submit">Submit</Button>
+                                    </form>
+                                </Form>
                             </div>
                         </div>
                     </TabsContent>
