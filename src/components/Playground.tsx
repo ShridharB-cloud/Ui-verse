@@ -77,6 +77,16 @@ import {
 } from "@/components/ui/resizable";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+    CommandSeparator,
+    CommandShortcut,
+} from "@/components/ui/command";
+import {
     RotateCw,
     Palette,
     Zap,
@@ -91,6 +101,11 @@ import {
     CalendarDays,
     Info,
     ChevronsUpDown,
+    Calculator,
+    Smile,
+    User,
+    CreditCard,
+    Settings,
 } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
@@ -575,6 +590,45 @@ export const Playground = () => {
     <Skeleton className="h-4 w-[200px]" />
   </div>
 </div>`;
+        } else if (activeTab === "command") {
+            code = `<Command className="rounded-lg border shadow-md">
+  <CommandInput placeholder="Type a command or search..." />
+  <CommandList>
+    <CommandEmpty>No results found.</CommandEmpty>
+    <CommandGroup heading="Suggestions">
+      <CommandItem>
+        <Calendar className="mr-2 h-4 w-4" />
+        <span>Calendar</span>
+      </CommandItem>
+      <CommandItem>
+        <Smile className="mr-2 h-4 w-4" />
+        <span>Search Emoji</span>
+      </CommandItem>
+      <CommandItem>
+        <Calculator className="mr-2 h-4 w-4" />
+        <span>Calculator</span>
+      </CommandItem>
+    </CommandGroup>
+    <CommandSeparator />
+    <CommandGroup heading="Settings">
+      <CommandItem>
+        <User className="mr-2 h-4 w-4" />
+        <span>Profile</span>
+        <CommandShortcut>⌘P</CommandShortcut>
+      </CommandItem>
+      <CommandItem>
+        <CreditCard className="mr-2 h-4 w-4" />
+        <span>Billing</span>
+        <CommandShortcut>⌘B</CommandShortcut>
+      </CommandItem>
+      <CommandItem>
+        <Settings className="mr-2 h-4 w-4" />
+        <span>Settings</span>
+        <CommandShortcut>⌘S</CommandShortcut>
+      </CommandItem>
+    </CommandGroup>
+  </CommandList>
+</Command>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -604,7 +658,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[170rem] grid-cols-[repeat(29,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[175rem] grid-cols-[repeat(30,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -634,6 +688,7 @@ export const Playground = () => {
                             <TabsTrigger value="hover-card">Hover Card</TabsTrigger>
                             <TabsTrigger value="resizable">Resizable</TabsTrigger>
                             <TabsTrigger value="skeleton">Skeleton</TabsTrigger>
+                            <TabsTrigger value="command">Command</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -2413,6 +2468,74 @@ export const Playground = () => {
                                         <Skeleton className="h-4 w-[200px]" />
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+
+                    {/* COMMAND TAB */}
+                    <TabsContent value="command">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" />
+                                        <Label>Interaction</Label>
+                                    </div>
+                                    <p className="text-muted-foreground">
+                                        Fast, composable, unstyled command menu for React.
+                                    </p>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <Command className="rounded-lg border shadow-md">
+                                    <CommandInput placeholder="Type a command or search..." />
+                                    <CommandList>
+                                        <CommandEmpty>No results found.</CommandEmpty>
+                                        <CommandGroup heading="Suggestions">
+                                            <CommandItem>
+                                                <CalendarDays className="mr-2 h-4 w-4" />
+                                                <span>Calendar</span>
+                                            </CommandItem>
+                                            <CommandItem>
+                                                <Smile className="mr-2 h-4 w-4" />
+                                                <span>Search Emoji</span>
+                                            </CommandItem>
+                                            <CommandItem>
+                                                <Calculator className="mr-2 h-4 w-4" />
+                                                <span>Calculator</span>
+                                            </CommandItem>
+                                        </CommandGroup>
+                                        <CommandSeparator />
+                                        <CommandGroup heading="Settings">
+                                            <CommandItem>
+                                                <User className="mr-2 h-4 w-4" />
+                                                <span>Profile</span>
+                                                <CommandShortcut>⌘P</CommandShortcut>
+                                            </CommandItem>
+                                            <CommandItem>
+                                                <CreditCard className="mr-2 h-4 w-4" />
+                                                <span>Billing</span>
+                                                <CommandShortcut>⌘B</CommandShortcut>
+                                            </CommandItem>
+                                            <CommandItem>
+                                                <Settings className="mr-2 h-4 w-4" />
+                                                <span>Settings</span>
+                                                <CommandShortcut>⌘S</CommandShortcut>
+                                            </CommandItem>
+                                        </CommandGroup>
+                                    </CommandList>
+                                </Command>
                             </div>
                         </div>
                     </TabsContent>
