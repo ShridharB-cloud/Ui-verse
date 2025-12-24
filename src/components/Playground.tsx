@@ -75,6 +75,8 @@ import {
     AvatarFallback,
     AvatarImage,
 } from "@/components/ui/avatar";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 
 export const Playground = () => {
     // Card State
@@ -236,6 +238,20 @@ export const Playground = () => {
   <AvatarImage src="https://github.com/shadcn.png" />
   <AvatarFallback>${avatarFallback}</AvatarFallback>
 </Avatar>`;
+        } else if (activeTab === "scroll") {
+            code = `<ScrollArea className="h-72 w-48 rounded-md border">
+  <div className="p-4">
+    <h4 className="mb-4 text-sm font-medium leading-none">Tags</h4>
+    {tags.map((tag) => (
+      <>
+        <div key={tag} className="text-sm">
+          {tag}
+        </div>
+        <Separator className="my-2" />
+      </>
+    ))}
+  </div>
+</ScrollArea>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -265,7 +281,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-7xl grid-cols-12">
+                        <TabsList className="grid w-full max-w-[90rem] grid-cols-[repeat(13,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -278,6 +294,7 @@ export const Playground = () => {
                             <TabsTrigger value="tooltip">Tooltip</TabsTrigger>
                             <TabsTrigger value="badge">Badge</TabsTrigger>
                             <TabsTrigger value="avatar">Avatar</TabsTrigger>
+                            <TabsTrigger value="scroll">Scroll</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -1110,6 +1127,59 @@ export const Playground = () => {
                                         <h3 className="font-medium text-lg">Shadcn</h3>
                                         <p className="text-sm text-muted-foreground">@shadcn</p>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+                    {/* SCROLL AREA TAB */}
+                    <TabsContent value="scroll">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" />
+                                        <Label>Description</Label>
+                                    </div>
+                                    <p className="text-muted-foreground">
+                                        Scroll Area augments native scroll functionality for custom, cross-browser styling.
+                                    </p>
+                                </div>
+
+                                <div className="grid gap-2">
+                                    <h3 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                        Content
+                                    </h3>
+                                    <p className="text-sm text-muted-foreground">
+                                        A list of 50 tags to demonstrate vertical scrolling.
+                                    </p>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <div className="flex items-center justify-center">
+                                    <ScrollArea className="h-72 w-48 rounded-md border bg-background/50 backdrop-blur-sm">
+                                        <div className="p-4">
+                                            <h4 className="mb-4 text-sm font-medium leading-none">Tags</h4>
+                                            {Array.from({ length: 50 }).map((_, i) => (
+                                                <div key={i}>
+                                                    <div className="text-sm">
+                                                        v1.2.0-beta.{50 - i}
+                                                    </div>
+                                                    <Separator className="my-2" />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </ScrollArea>
                                 </div>
                             </div>
                         </div>
