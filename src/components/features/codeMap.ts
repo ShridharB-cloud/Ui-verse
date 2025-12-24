@@ -31,6 +31,8 @@ import InfiniteScrollDemoCode from "./InfiniteScrollDemo.tsx?raw";
 import ToastDemoCode from "./ToastDemo.tsx?raw";
 // @ts-ignore
 import AccordionDemoCode from "./AccordionDemo.tsx?raw";
+// @ts-ignore
+import HelpDemoCode from "./HelpDemo.tsx?raw";
 
 export const featureCodeMap: Record<string, string> = {
   // Specific Demos
@@ -68,7 +70,8 @@ export const featureCodeMap: Record<string, string> = {
   "Screen Reader Labels": InteractionDemoCode,
   "ARIA State Indicators": InteractionDemoCode,
   "Device-Adaptive UI": InteractionDemoCode,
-  "Context-Aware Help Hints": InteractionDemoCode,
+  "Context-Aware Help Hints": HelpDemoCode,
+  "Skeleton Loaders": InteractionDemoCode,
 
   // State Demos
   "Auto-Save Indicator": StateDemoCode,
