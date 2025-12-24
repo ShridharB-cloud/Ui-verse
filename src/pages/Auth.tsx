@@ -37,7 +37,7 @@ export default function Auth() {
 
   const validateForm = () => {
     const newErrors: { email?: string; password?: string } = {};
-    
+
     try {
       emailSchema.parse(email);
     } catch (e) {
@@ -60,17 +60,24 @@ export default function Auth() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!validateForm()) return;
-    
+    console.log("Form submitted");
+
+    if (!validateForm()) {
+      console.log("Validation failed", errors);
+      return;
+    }
+
+    console.log("Validation passed, loading:", true);
     setLoading(true);
 
     try {
       if (isLogin) {
-        const { error } = await supabase.auth.signInWithPassword({
+        console.log("Attempting login with", email);
+        const { error, data } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
+        console.log("Login result:", { error, data });
 
         if (error) throw error;
 
@@ -80,8 +87,9 @@ export default function Auth() {
         });
       } else {
         const redirectUrl = `${window.location.origin}/`;
-        
-        const { error } = await supabase.auth.signUp({
+        console.log("Attempting signup with", email, redirectUrl);
+
+        const { error, data } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -91,6 +99,7 @@ export default function Auth() {
             },
           },
         });
+        console.log("Signup result:", { error, data });
 
         if (error) throw error;
 
@@ -100,12 +109,13 @@ export default function Auth() {
         });
       }
     } catch (error: any) {
+      console.error("Auth error caught:", error);
       let errorMessage = error.message;
-      
+
       if (error.message?.includes("User already registered")) {
         errorMessage = "An account with this email already exists. Please sign in instead.";
       }
-      
+
       toast({
         title: "Error",
         description: errorMessage,
@@ -113,6 +123,7 @@ export default function Auth() {
       });
     } finally {
       setLoading(false);
+      console.log("Loading set to false");
     }
   };
 
@@ -187,9 +198,8 @@ export default function Auth() {
                       setErrors((prev) => ({ ...prev, email: undefined }));
                     }}
                     placeholder="you@example.com"
-                    className={`w-full pl-11 pr-4 py-3 rounded-lg input-dark transition-all ${
-                      errors.email ? "border-destructive" : ""
-                    }`}
+                    className={`w-full pl-11 pr-4 py-3 rounded-lg input-dark transition-all ${errors.email ? "border-destructive" : ""
+                      }`}
                   />
                 </div>
                 {errors.email && (
@@ -209,9 +219,8 @@ export default function Auth() {
                       setErrors((prev) => ({ ...prev, password: undefined }));
                     }}
                     placeholder="••••••••"
-                    className={`w-full pl-11 pr-4 py-3 rounded-lg input-dark transition-all ${
-                      errors.password ? "border-destructive" : ""
-                    }`}
+                    className={`w-full pl-11 pr-4 py-3 rounded-lg input-dark transition-all ${errors.password ? "border-destructive" : ""
+                      }`}
                   />
                 </div>
                 {errors.password && (
