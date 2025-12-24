@@ -835,6 +835,27 @@ export function InputForm() {
     </BreadcrumbItem>
   </BreadcrumbList>
 </Breadcrumb>`;
+        } else if (activeTab === "chart") {
+            code = `<ResponsiveContainer width="100%" height={350}>
+  <BarChart data={data}>
+    <XAxis
+      dataKey="name"
+      stroke="#888888"
+      fontSize={12}
+      tickLine={false}
+      axisLine={false}
+    />
+    <YAxis
+      stroke="#888888"
+      fontSize={12}
+      tickLine={false}
+      axisLine={false}
+      tickFormatter={(value) => \`$\${value}\`}
+    />
+    <Tooltip />
+    <Bar dataKey="total" fill="#adfa1d" radius={[4, 4, 0, 0]} />
+  </BarChart>
+</ResponsiveContainer>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -864,7 +885,7 @@ export function InputForm() {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[200rem] grid-cols-[repeat(35,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[205rem] grid-cols-[repeat(36,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -900,6 +921,7 @@ export function InputForm() {
                             <TabsTrigger value="form">Form</TabsTrigger>
                             <TabsTrigger value="input-otp">Input OTP</TabsTrigger>
                             <TabsTrigger value="breadcrumb">Breadcrumb</TabsTrigger>
+                            <TabsTrigger value="chart">Chart</TabsTrigger>
                         </TabsList>
                     </div>
 
