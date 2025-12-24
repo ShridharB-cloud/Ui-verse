@@ -23,6 +23,8 @@ import StickyLayoutDemoCode from "./StickyLayoutDemo.tsx?raw";
 import BreadcrumbDemoCode from "./BreadcrumbDemo.tsx?raw";
 // @ts-ignore
 import TableDemoCode from "./TableDemo.tsx?raw";
+// @ts-ignore
+import SearchDemoCode from "./SearchDemo.tsx?raw";
 
 export const featureCodeMap: Record<string, string> = {
   // Specific Demos
@@ -43,7 +45,7 @@ export const featureCodeMap: Record<string, string> = {
   "Customizable Tables": TableDemoCode,
   "Expandable Sections": LayoutDemoCode,
   "Filter & Sort Engine": TableDemoCode,
-  "Smart Search with Highlighting": LayoutDemoCode,
+  "Smart Search with Highlighting": SearchDemoCode,
   "Infinite Scroll / Lazy Load": LayoutDemoCode,
 
   // Interaction Demos
