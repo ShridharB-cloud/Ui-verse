@@ -30,6 +30,12 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export const Playground = () => {
     // Card State
@@ -54,6 +60,9 @@ export const Playground = () => {
     // Dialog State
     const [dialogTitle, setDialogTitle] = useState("Are you sure?");
     const [dialogDesc, setDialogDesc] = useState("This action cannot be undone.");
+
+    // Accordion State
+    const [accordionItems, setAccordionItems] = useState(3);
 
     const { toast } = useToast();
     const [activeTab, setActiveTab] = useState("card");
@@ -100,6 +109,15 @@ export const Playground = () => {
     </DialogHeader>
   </DialogContent>
 </Dialog>`;
+        } else if (activeTab === "accordion") {
+            code = `<Accordion type="single" collapsible>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>Is it accessible?</AccordionTrigger>
+    <AccordionContent>
+      Yes. It adheres to the WAI-ARIA design pattern.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -129,12 +147,13 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-md grid-cols-5">
+                        <TabsList className="grid w-full max-w-xl grid-cols-6">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
                             <TabsTrigger value="toast">Toast</TabsTrigger>
                             <TabsTrigger value="dialog">Dialog</TabsTrigger>
+                            <TabsTrigger value="accordion">Accordion</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -533,6 +552,62 @@ export const Playground = () => {
                                     <p className="mt-4 text-sm text-muted-foreground">
                                         Click to open the modal
                                     </p>
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+                    {/* ACCORDION TAB */}
+                    <TabsContent value="accordion">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <Label className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" /> Item Count
+                                    </Label>
+                                    <RadioGroup
+                                        value={accordionItems.toString()}
+                                        onValueChange={(v) => setAccordionItems(parseInt(v))}
+                                        className="grid grid-cols-3 gap-4"
+                                    >
+                                        {[1, 2, 3].map((count) => (
+                                            <div key={count} className="flex items-center space-x-2">
+                                                <RadioGroupItem value={count.toString()} id={`ac-${count}`} />
+                                                <Label htmlFor={`ac-${count}`}>{count} {count === 1 ? 'Item' : 'Items'}</Label>
+                                            </div>
+                                        ))}
+                                    </RadioGroup>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button
+                                        onClick={() => setAccordionItems(3)}
+                                        variant="outline"
+                                        className="flex-1"
+                                    >
+                                        Reset
+                                    </Button>
+                                    <Button onClick={copyCode} className="flex-1 gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <div className="w-full max-w-md bg-background/50 p-6 rounded-xl border border-border/50 backdrop-blur-sm">
+                                    <Accordion type="single" collapsible className="w-full">
+                                        {Array.from({ length: accordionItems }).map((_, i) => (
+                                            <AccordionItem key={i} value={`item-${i + 1}`}>
+                                                <AccordionTrigger>Is it accessible?</AccordionTrigger>
+                                                <AccordionContent>
+                                                    Yes. It adheres to the WAI-ARIA design pattern.
+                                                </AccordionContent>
+                                            </AccordionItem>
+                                        ))}
+                                    </Accordion>
                                 </div>
                             </div>
                         </div>
