@@ -47,6 +47,15 @@ import {
     MenubarTrigger,
 } from "@/components/ui/menubar";
 import {
+    NavigationMenu,
+    NavigationMenuContent,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger,
+    navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+import {
     RotateCw,
     Palette,
     Zap,
@@ -447,6 +456,17 @@ export const Playground = () => {
     </MenubarContent>
   </MenubarMenu>
 </Menubar>`;
+        } else if (activeTab === "navigation-menu") {
+            code = `<NavigationMenu>
+  <NavigationMenuList>
+    <NavigationMenuItem>
+      <NavigationMenuTrigger>Item One</NavigationMenuTrigger>
+      <NavigationMenuContent>
+        <NavigationMenuLink>Link</NavigationMenuLink>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
+  </NavigationMenuList>
+</NavigationMenu>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -476,7 +496,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[145rem] grid-cols-[repeat(24,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[150rem] grid-cols-[repeat(25,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -501,6 +521,7 @@ export const Playground = () => {
                             <TabsTrigger value="progress">Progress</TabsTrigger>
                             <TabsTrigger value="context-menu">Context Menu</TabsTrigger>
                             <TabsTrigger value="menubar">Menubar</TabsTrigger>
+                            <TabsTrigger value="navigation-menu">Navigation Menu</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -1696,6 +1717,443 @@ export const Playground = () => {
                                         </Card>
                                     </TabsContent>
                                 </Tabs>
+                            </div>
+                        </div>
+                    </TabsContent>
+
+                    {/* TEXTAREA TAB */}
+                    <TabsContent value="textarea">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" />
+                                        <Label>Settings</Label>
+                                    </div>
+                                    <div className="flex items-center space-x-2">
+                                        <Checkbox
+                                            id="disable-textarea"
+                                            checked={textareaDisabled}
+                                            onCheckedChange={(checked) => setTextareaDisabled(checked as boolean)}
+                                        />
+                                        <Label htmlFor="disable-textarea">Disable Textarea</Label>
+                                    </div>
+                                    <div className="p-4 rounded-md bg-muted/50 border font-mono text-sm">
+                                        {textareaValue || "Start typing..."}
+                                    </div>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <div className="grid w-full gap-1.5 max-w-sm">
+                                    <Label htmlFor="message">Your message</Label>
+                                    <Textarea
+                                        placeholder="Type your message here."
+                                        id="message"
+                                        disabled={textareaDisabled}
+                                        value={textareaValue}
+                                        onChange={(e) => setTextareaValue(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+
+                    {/* COLLAPSIBLE TAB */}
+                    <TabsContent value="collapsible">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" />
+                                        <Label>State</Label>
+                                    </div>
+                                    <div className="p-4 rounded-md bg-muted/50 border font-mono text-sm">
+                                        {isOpen ? "Open" : "Closed"}
+                                    </div>
+                                    <p className="text-sm text-muted-foreground">
+                                        An interactive component which expands/collapses a panel.
+                                    </p>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <Collapsible
+                                    open={isOpen}
+                                    onOpenChange={setIsOpen}
+                                    className="w-[350px] space-y-2"
+                                >
+                                    <div className="flex items-center justify-between space-x-4 px-4 py-2 border rounded-md bg-background/50 backdrop-blur-sm">
+                                        <h4 className="text-sm font-semibold">
+                                            @peduarte starred 3 repositories
+                                        </h4>
+                                        <CollapsibleTrigger asChild>
+                                            <Button variant="ghost" size="sm" className="w-9 p-0">
+                                                <ChevronsUpDown className="h-4 w-4" />
+                                                <span className="sr-only">Toggle</span>
+                                            </Button>
+                                        </CollapsibleTrigger>
+                                    </div>
+                                    <div className="rounded-md border px-4 py-3 font-mono text-sm bg-background/50 backdrop-blur-sm">
+                                        @radix-ui/primitives
+                                    </div>
+                                    <CollapsibleContent className="space-y-2">
+                                        <div className="rounded-md border px-4 py-3 font-mono text-sm bg-background/50 backdrop-blur-sm">
+                                            @radix-ui/colors
+                                        </div>
+                                        <div className="rounded-md border px-4 py-3 font-mono text-sm bg-background/50 backdrop-blur-sm">
+                                            @stitches/react
+                                        </div>
+                                    </CollapsibleContent>
+                                </Collapsible>
+                            </div>
+                        </div>
+                    </TabsContent>
+
+                    {/* PROGRESS TAB */}
+                    <TabsContent value="progress">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" />
+                                        <Label>Loading Status</Label>
+                                    </div>
+                                    <div className="p-4 rounded-md bg-muted/50 border font-mono text-2xl text-center">
+                                        {progress}%
+                                    </div>
+                                    <p className="text-sm text-muted-foreground">
+                                        Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.
+                                    </p>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <div className="w-[60%] space-y-4">
+                                    <Progress value={progress} className="w-full" />
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+
+                    {/* CONTEXT MENU TAB */}
+                    <TabsContent value="context-menu">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" />
+                                        <Label>Interaction</Label>
+                                    </div>
+                                    <p className="text-muted-foreground">
+                                        Displays a menu to the user — such as a set of actions or functions — triggered by a right-click.
+                                    </p>
+                                    <div className="p-4 rounded-md bg-muted/50 border text-sm text-center italic">
+                                        Right-click the area on the right to see the menu.
+                                    </div>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <ContextMenu>
+                                    <ContextMenuTrigger className="flex h-[150px] w-[300px] items-center justify-center rounded-md border border-dashed text-sm bg-background/50 backdrop-blur-sm">
+                                        Right click here
+                                    </ContextMenuTrigger>
+                                    <ContextMenuContent className="w-64">
+                                        <ContextMenuItem inset>
+                                            Back
+                                            <span className="ml-auto text-xs tracking-widest text-muted-foreground">
+                                                ⌘[
+                                            </span>
+                                        </ContextMenuItem>
+                                        <ContextMenuItem inset disabled>
+                                            Forward
+                                            <span className="ml-auto text-xs tracking-widest text-muted-foreground">
+                                                ⌘]
+                                            </span>
+                                        </ContextMenuItem>
+                                        <ContextMenuItem inset>
+                                            Reload
+                                            <span className="ml-auto text-xs tracking-widest text-muted-foreground">
+                                                ⌘R
+                                            </span>
+                                        </ContextMenuItem>
+                                        <ContextMenuItem inset>
+                                            Save As...
+                                            <span className="ml-auto text-xs tracking-widest text-muted-foreground">
+                                                ⇧⌘S
+                                            </span>
+                                        </ContextMenuItem>
+                                        <ContextMenuItem inset>Print...</ContextMenuItem>
+                                    </ContextMenuContent>
+                                </ContextMenu>
+                            </div>
+                        </div>
+                    </TabsContent>
+
+                    {/* MENUBAR TAB */}
+                    <TabsContent value="menubar">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" />
+                                        <Label>Navigation</Label>
+                                    </div>
+                                    <p className="text-muted-foreground">
+                                        A visually persistent menu common in desktop applications that provides quick access to a consistent set of commands.
+                                    </p>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <Menubar className="bg-background/50 backdrop-blur-sm">
+                                    <MenubarMenu>
+                                        <MenubarTrigger>File</MenubarTrigger>
+                                        <MenubarContent>
+                                            <MenubarItem>
+                                                New Tab <MenubarShortcut>⌘T</MenubarShortcut>
+                                            </MenubarItem>
+                                            <MenubarItem>
+                                                New Window <MenubarShortcut>⌘N</MenubarShortcut>
+                                            </MenubarItem>
+                                            <MenubarItem disabled>New Incognito Window</MenubarItem>
+                                            <MenubarSeparator />
+                                            <MenubarSub>
+                                                <MenubarSubTrigger>Share</MenubarSubTrigger>
+                                                <MenubarSubContent>
+                                                    <MenubarItem>Email link</MenubarItem>
+                                                    <MenubarItem>Messages</MenubarItem>
+                                                    <MenubarItem>Notes</MenubarItem>
+                                                </MenubarSubContent>
+                                            </MenubarSub>
+                                            <MenubarSeparator />
+                                            <MenubarItem>
+                                                Print... <MenubarShortcut>⌘P</MenubarShortcut>
+                                            </MenubarItem>
+                                        </MenubarContent>
+                                    </MenubarMenu>
+                                    <MenubarMenu>
+                                        <MenubarTrigger>Edit</MenubarTrigger>
+                                        <MenubarContent>
+                                            <MenubarItem>
+                                                Undo <MenubarShortcut>⌘Z</MenubarShortcut>
+                                            </MenubarItem>
+                                            <MenubarItem>
+                                                Redo <MenubarShortcut>⇧⌘Z</MenubarShortcut>
+                                            </MenubarItem>
+                                            <MenubarSeparator />
+                                            <MenubarSub>
+                                                <MenubarSubTrigger>Find</MenubarSubTrigger>
+                                                <MenubarSubContent>
+                                                    <MenubarItem>Search the web</MenubarItem>
+                                                    <MenubarSeparator />
+                                                    <MenubarItem>Find...</MenubarItem>
+                                                    <MenubarItem>Find Next</MenubarItem>
+                                                    <MenubarItem>Find Previous</MenubarItem>
+                                                </MenubarSubContent>
+                                            </MenubarSub>
+                                            <MenubarSeparator />
+                                            <MenubarItem>Cut</MenubarItem>
+                                            <MenubarItem>Copy</MenubarItem>
+                                            <MenubarItem>Paste</MenubarItem>
+                                        </MenubarContent>
+                                    </MenubarMenu>
+                                    <MenubarMenu>
+                                        <MenubarTrigger>View</MenubarTrigger>
+                                        <MenubarContent>
+                                            <MenubarCheckboxItem>Always Show Bookmarks Bar</MenubarCheckboxItem>
+                                            <MenubarCheckboxItem checked>
+                                                Always Show Full URLs
+                                            </MenubarCheckboxItem>
+                                            <MenubarSeparator />
+                                            <MenubarItem inset>
+                                                Reload <MenubarShortcut>⌘R</MenubarShortcut>
+                                            </MenubarItem>
+                                            <MenubarItem disabled inset>
+                                                Force Reload <MenubarShortcut>⇧⌘R</MenubarShortcut>
+                                            </MenubarItem>
+                                            <MenubarSeparator />
+                                            <MenubarItem inset>Toggle Fullscreen</MenubarItem>
+                                            <MenubarSeparator />
+                                            <MenubarItem inset>Hide Sidebar</MenubarItem>
+                                        </MenubarContent>
+                                    </MenubarMenu>
+                                    <MenubarMenu>
+                                        <MenubarTrigger>Profiles</MenubarTrigger>
+                                        <MenubarContent>
+                                            <MenubarRadioGroup value="benoit">
+                                                <MenubarRadioItem value="andy">Andy</MenubarRadioItem>
+                                                <MenubarRadioItem value="benoit">Benoit</MenubarRadioItem>
+                                                <MenubarRadioItem value="Luis">Luis</MenubarRadioItem>
+                                            </MenubarRadioGroup>
+                                            <MenubarSeparator />
+                                            <MenubarItem inset>Edit...</MenubarItem>
+                                            <MenubarSeparator />
+                                            <MenubarItem inset>Add Profile...</MenubarItem>
+                                        </MenubarContent>
+                                    </MenubarMenu>
+                                </Menubar>
+                            </div>
+                        </div>
+                    </TabsContent>
+
+                    {/* NAVIGATION MENU TAB */}
+                    <TabsContent value="navigation-menu">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" />
+                                        <Label>Navigation</Label>
+                                    </div>
+                                    <p className="text-muted-foreground">
+                                        A collection of links for navigating websites.
+                                    </p>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <NavigationMenu className="z-[10]">
+                                    <NavigationMenuList>
+                                        <NavigationMenuItem>
+                                            <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
+                                            <NavigationMenuContent>
+                                                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                                                    <li className="row-span-3">
+                                                        <NavigationMenuLink asChild>
+                                                            <a
+                                                                className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                                                                href="/"
+                                                            >
+                                                                <div className="mb-2 mt-4 text-lg font-medium">
+                                                                    shadcn/ui
+                                                                </div>
+                                                                <p className="text-sm leading-tight text-muted-foreground">
+                                                                    Beautifully designed components built with Radix UI and
+                                                                    Tailwind CSS.
+                                                                </p>
+                                                            </a>
+                                                        </NavigationMenuLink>
+                                                    </li>
+                                                    <li>
+                                                        <NavigationMenuLink asChild>
+                                                            <a
+                                                                className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                                                href="/docs"
+                                                            >
+                                                                <div className="text-sm font-medium leading-none">Introduction</div>
+                                                                <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                                                    Re-usable components built using Radix UI and Tailwind CSS.
+                                                                </p>
+                                                            </a>
+                                                        </NavigationMenuLink>
+                                                    </li>
+                                                    <li>
+                                                        <NavigationMenuLink asChild>
+                                                            <a
+                                                                className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                                                href="/docs/installation"
+                                                            >
+                                                                <div className="text-sm font-medium leading-none">Installation</div>
+                                                                <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                                                    How to install dependencies and structure your app.
+                                                                </p>
+                                                            </a>
+                                                        </NavigationMenuLink>
+                                                    </li>
+                                                </ul>
+                                            </NavigationMenuContent>
+                                        </NavigationMenuItem>
+                                        <NavigationMenuItem>
+                                            <NavigationMenuTrigger>Components</NavigationMenuTrigger>
+                                            <NavigationMenuContent>
+                                                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                                                    {["Alert Dialog", "Hover Card", "Progress", "Scroll-area", "Tabs", "Tooltip"].map((component) => (
+                                                        <li key={component}>
+                                                            <NavigationMenuLink asChild>
+                                                                <a
+                                                                    className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                                                    href={`/docs/primitives/${component.toLowerCase().replace(" ", "-")}`}
+                                                                >
+                                                                    <div className="text-sm font-medium leading-none">{component}</div>
+                                                                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                                                        A {component} component.
+                                                                    </p>
+                                                                </a>
+                                                            </NavigationMenuLink>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </NavigationMenuContent>
+                                        </NavigationMenuItem>
+                                        <NavigationMenuItem>
+                                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                                Documentation
+                                            </NavigationMenuLink>
+                                        </NavigationMenuItem>
+                                    </NavigationMenuList>
+                                </NavigationMenu>
                             </div>
                         </div>
                     </TabsContent>
