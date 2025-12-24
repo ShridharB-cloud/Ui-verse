@@ -43,6 +43,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
     Sheet,
     SheetContent,
@@ -69,6 +70,11 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Badge } from "@/components/ui/badge";
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+} from "@/components/ui/avatar";
 
 export const Playground = () => {
     // Card State
@@ -109,6 +115,10 @@ export const Playground = () => {
     // Badge State
     const [badgeText, setBadgeText] = useState("New Feature");
     const [badgeVariant, setBadgeVariant] = useState<"default" | "secondary" | "destructive" | "outline">("default");
+
+    // Avatar State
+    const [avatarFallback, setAvatarFallback] = useState("CN");
+    const [showAvatarImage, setShowAvatarImage] = useState(true);
 
     const { toast } = useToast();
     const [activeTab, setActiveTab] = useState("card");
@@ -221,6 +231,11 @@ export const Playground = () => {
 </TooltipProvider>`;
         } else if (activeTab === "badge") {
             code = `<Badge variant="${badgeVariant}">${badgeText}</Badge>`;
+        } else if (activeTab === "avatar") {
+            code = `<Avatar>
+  <AvatarImage src="https://github.com/shadcn.png" />
+  <AvatarFallback>${avatarFallback}</AvatarFallback>
+</Avatar>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -250,7 +265,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-6xl grid-cols-11">
+                        <TabsList className="grid w-full max-w-7xl grid-cols-12">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -262,6 +277,7 @@ export const Playground = () => {
                             <TabsTrigger value="alert">Alert</TabsTrigger>
                             <TabsTrigger value="tooltip">Tooltip</TabsTrigger>
                             <TabsTrigger value="badge">Badge</TabsTrigger>
+                            <TabsTrigger value="avatar">Avatar</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -1033,6 +1049,67 @@ export const Playground = () => {
                                     <p className="mt-8 text-sm text-muted-foreground">
                                         Badges are used to highlight status, tags, or counts.
                                     </p>
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+                    {/* AVATAR TAB */}
+                    <TabsContent value="avatar">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <Label className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" /> Fallback Initials
+                                    </Label>
+                                    <Input
+                                        value={avatarFallback}
+                                        onChange={(e) => setAvatarFallback(e.target.value.slice(0, 2).toUpperCase())}
+                                        placeholder="CN"
+                                        maxLength={2}
+                                        className="bg-background/50 border-white/10"
+                                    />
+                                    <p className="text-sm text-muted-foreground">
+                                        Max 2 characters.
+                                    </p>
+                                </div>
+
+                                <div className="space-y-4">
+                                    <div className="flex items-center space-x-2">
+                                        <Checkbox
+                                            id="avatar-image"
+                                            checked={showAvatarImage}
+                                            onCheckedChange={(c) => setShowAvatarImage(!!c)}
+                                        />
+                                        <Label htmlFor="avatar-image">Show Image</Label>
+                                    </div>
+                                    <p className="text-sm text-muted-foreground">
+                                        Uncheck to see the fallback state.
+                                    </p>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <div className="text-center">
+                                    <Avatar className="w-24 h-24 mx-auto">
+                                        {showAvatarImage && (
+                                            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                                        )}
+                                        <AvatarFallback className="text-2xl">{avatarFallback}</AvatarFallback>
+                                    </Avatar>
+                                    <div className="mt-8 space-y-1">
+                                        <h3 className="font-medium text-lg">Shadcn</h3>
+                                        <p className="text-sm text-muted-foreground">@shadcn</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
