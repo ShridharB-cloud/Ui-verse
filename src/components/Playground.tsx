@@ -326,6 +326,23 @@ export const Playground = () => {
     <Label htmlFor="r3">Compact</Label>
   </div>
 </RadioGroup>`;
+        } else if (activeTab === "tabs") {
+            code = `<Tabs defaultValue="account" className="w-[400px]">
+  <TabsList className="grid w-full grid-cols-2">
+    <TabsTrigger value="account">Account</TabsTrigger>
+    <TabsTrigger value="password">Password</TabsTrigger>
+  </TabsList>
+  <TabsContent value="account">
+    <div className="p-4 rounded-md border">
+      Make changes to your account here.
+    </div>
+  </TabsContent>
+  <TabsContent value="password">
+    <div className="p-4 rounded-md border">
+      Change your password here.
+    </div>
+  </TabsContent>
+</Tabs>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -355,7 +372,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[115rem] grid-cols-[repeat(18,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[120rem] grid-cols-[repeat(19,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -374,6 +391,7 @@ export const Playground = () => {
                             <TabsTrigger value="slider">Slider</TabsTrigger>
                             <TabsTrigger value="checkbox">Checkbox</TabsTrigger>
                             <TabsTrigger value="radio">Radio</TabsTrigger>
+                            <TabsTrigger value="tabs">Tabs</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -1496,6 +1514,79 @@ export const Playground = () => {
                                         </div>
                                     </RadioGroup>
                                 </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+                    {/* TABS TAB */}
+                    <TabsContent value="tabs">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" />
+                                        <Label>Overview</Label>
+                                    </div>
+                                    <p className="text-muted-foreground">
+                                        Tabs allow users to organize and navigate between groups of content that are related and at the same level of hierarchy.
+                                    </p>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <Tabs defaultValue="account" className="w-[400px]">
+                                    <TabsList className="grid w-full grid-cols-2">
+                                        <TabsTrigger value="account">Account</TabsTrigger>
+                                        <TabsTrigger value="password">Password</TabsTrigger>
+                                    </TabsList>
+                                    <TabsContent value="account">
+                                        <Card>
+                                            <div className="p-6 space-y-2">
+                                                <h3 className="text-lg font-medium">Account</h3>
+                                                <p className="text-sm text-muted-foreground">
+                                                    Make changes to your account here. Click save when you're done.
+                                                </p>
+                                                <div className="space-y-1">
+                                                    <Label htmlFor="name">Name</Label>
+                                                    <Input id="name" defaultValue="Pedro Duarte" />
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <Label htmlFor="username">Username</Label>
+                                                    <Input id="username" defaultValue="@peduarte" />
+                                                </div>
+                                                <Button className="mt-4">Save changes</Button>
+                                            </div>
+                                        </Card>
+                                    </TabsContent>
+                                    <TabsContent value="password">
+                                        <Card>
+                                            <div className="p-6 space-y-2">
+                                                <h3 className="text-lg font-medium">Password</h3>
+                                                <p className="text-sm text-muted-foreground">
+                                                    Change your password here. After saving, you'll be logged out.
+                                                </p>
+                                                <div className="space-y-1">
+                                                    <Label htmlFor="current">Current password</Label>
+                                                    <Input id="current" type="password" />
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <Label htmlFor="new">New password</Label>
+                                                    <Input id="new" type="password" />
+                                                </div>
+                                                <Button className="mt-4">Save password</Button>
+                                            </div>
+                                        </Card>
+                                    </TabsContent>
+                                </Tabs>
                             </div>
                         </div>
                     </TabsContent>
