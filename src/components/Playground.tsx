@@ -819,6 +819,22 @@ export function InputForm() {
     <InputOTPSlot index={5} />
   </InputOTPGroup>
 </InputOTP>`;
+        } else if (activeTab === "breadcrumb") {
+            code = `<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/">Home</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/components">Components</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+    </BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -848,7 +864,7 @@ export function InputForm() {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[195rem] grid-cols-[repeat(34,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[200rem] grid-cols-[repeat(35,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -883,6 +899,7 @@ export function InputForm() {
                             <TabsTrigger value="carousel">Carousel</TabsTrigger>
                             <TabsTrigger value="form">Form</TabsTrigger>
                             <TabsTrigger value="input-otp">Input OTP</TabsTrigger>
+                            <TabsTrigger value="breadcrumb">Breadcrumb</TabsTrigger>
                         </TabsList>
                     </div>
 
