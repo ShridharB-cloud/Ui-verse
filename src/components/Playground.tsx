@@ -805,6 +805,20 @@ export function InputForm() {
   )
 }
 `;
+        } else if (activeTab === "input-otp") {
+            code = `<InputOTP maxLength={6}>
+  <InputOTPGroup>
+    <InputOTPSlot index={0} />
+    <InputOTPSlot index={1} />
+    <InputOTPSlot index={2} />
+  </InputOTPGroup>
+  <InputOTPSeparator />
+  <InputOTPGroup>
+    <InputOTPSlot index={3} />
+    <InputOTPSlot index={4} />
+    <InputOTPSlot index={5} />
+  </InputOTPGroup>
+</InputOTP>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -834,7 +848,7 @@ export function InputForm() {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[190rem] grid-cols-[repeat(33,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[195rem] grid-cols-[repeat(34,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -868,6 +882,7 @@ export function InputForm() {
                             <TabsTrigger value="drawer">Drawer</TabsTrigger>
                             <TabsTrigger value="carousel">Carousel</TabsTrigger>
                             <TabsTrigger value="form">Form</TabsTrigger>
+                            <TabsTrigger value="input-otp">Input OTP</TabsTrigger>
                         </TabsList>
                     </div>
 
