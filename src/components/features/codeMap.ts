@@ -25,6 +25,8 @@ import BreadcrumbDemoCode from "./BreadcrumbDemo.tsx?raw";
 import TableDemoCode from "./TableDemo.tsx?raw";
 // @ts-ignore
 import SearchDemoCode from "./SearchDemo.tsx?raw";
+// @ts-ignore
+import InfiniteScrollDemoCode from "./InfiniteScrollDemo.tsx?raw";
 
 export const featureCodeMap: Record<string, string> = {
   // Specific Demos
@@ -46,7 +48,7 @@ export const featureCodeMap: Record<string, string> = {
   "Expandable Sections": LayoutDemoCode,
   "Filter & Sort Engine": TableDemoCode,
   "Smart Search with Highlighting": SearchDemoCode,
-  "Infinite Scroll / Lazy Load": LayoutDemoCode,
+  "Infinite Scroll / Lazy Load": InfiniteScrollDemoCode,
 
   // Interaction Demos
   "Cursor Interaction Effects": InteractionDemoCode,

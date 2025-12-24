@@ -13,6 +13,7 @@ import { StickyLayoutDemo } from "./features/StickyLayoutDemo";
 import { BreadcrumbDemo } from "./features/BreadcrumbDemo";
 import { TableDemo } from "./features/TableDemo";
 import { SearchDemo } from "./features/SearchDemo";
+import { InfiniteScrollDemo } from "./features/InfiniteScrollDemo";
 import { FontFamilyDemo } from "./features/FontFamilyDemo";
 import { LayoutDemo } from "./features/LayoutDemo";
 import { InteractionDemo } from "./features/InteractionDemo";
@@ -38,6 +39,7 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
   const [showBreadcrumbDemo, setShowBreadcrumbDemo] = useState(false);
   const [showTableDemo, setShowTableDemo] = useState(false);
   const [showSearchDemo, setShowSearchDemo] = useState(false);
+  const [showInfiniteDemo, setShowInfiniteDemo] = useState(false);
   const [showLayoutDemo, setShowLayoutDemo] = useState(false);
   const [showInteractionDemo, setShowInteractionDemo] = useState(false);
   const [showStateDemo, setShowStateDemo] = useState(false);
@@ -113,6 +115,10 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       setShowSearchDemo(true);
       return;
     }
+    if (feature.title.includes("Infinite") || feature.title.includes("Lazy")) {
+      setShowInfiniteDemo(true);
+      return;
+    }
 
     // Layout & Navigation group
     if (feature.title.includes("Layout") || feature.title.includes("Grid") || feature.title.includes("Sidebar") || feature.title.includes("Panel") || feature.title.includes("Nav") || feature.title.includes("Header") || feature.title.includes("Footer") || feature.title.includes("List") || feature.title.includes("Table") || feature.title.includes("Sort") || feature.title.includes("Filter") || feature.title.includes("Search") || feature.title.includes("Infinite") || feature.title.includes("Lazy") || feature.title.includes("Orientation")) {
@@ -161,6 +167,9 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       )}
       {feature.title.includes("Search") && (
         <SearchDemo open={showSearchDemo} onOpenChange={setShowSearchDemo} />
+      )}
+      {(feature.title.includes("Infinite") || feature.title.includes("Lazy")) && (
+        <InfiniteScrollDemo open={showInfiniteDemo} onOpenChange={setShowInfiniteDemo} />
       )}
 
       <LayoutDemo open={showLayoutDemo} onOpenChange={setShowLayoutDemo} title={feature.title} />
