@@ -71,6 +71,11 @@ import {
     HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import {
+    ResizableHandle,
+    ResizablePanel,
+    ResizablePanelGroup,
+} from "@/components/ui/resizable";
+import {
     RotateCw,
     Palette,
     Zap,
@@ -534,6 +539,33 @@ export const Playground = () => {
     </div>
   </HoverCardContent>
 </HoverCard>`;
+        } else if (activeTab === "resizable") {
+            code = `<ResizablePanelGroup
+  direction="horizontal"
+  className="max-w-md rounded-lg border"
+>
+  <ResizablePanel defaultSize={50}>
+    <div className="flex h-[200px] items-center justify-center p-6">
+      <span className="font-semibold">One</span>
+    </div>
+  </ResizablePanel>
+  <ResizableHandle />
+  <ResizablePanel defaultSize={50}>
+    <ResizablePanelGroup direction="vertical">
+      <ResizablePanel defaultSize={25}>
+        <div className="flex h-full items-center justify-center p-6">
+          <span className="font-semibold">Two</span>
+        </div>
+      </ResizablePanel>
+      <ResizableHandle />
+      <ResizablePanel defaultSize={75}>
+        <div className="flex h-full items-center justify-center p-6">
+          <span className="font-semibold">Three</span>
+        </div>
+      </ResizablePanel>
+    </ResizablePanelGroup>
+  </ResizablePanel>
+</ResizablePanelGroup>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -563,7 +595,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[160rem] grid-cols-[repeat(27,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[165rem] grid-cols-[repeat(28,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -591,6 +623,7 @@ export const Playground = () => {
                             <TabsTrigger value="navigation-menu">Navigation Menu</TabsTrigger>
                             <TabsTrigger value="pagination">Pagination</TabsTrigger>
                             <TabsTrigger value="hover-card">Hover Card</TabsTrigger>
+                            <TabsTrigger value="resizable">Resizable</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -2277,6 +2310,62 @@ export const Playground = () => {
                                         </PaginationItem>
                                     </PaginationContent>
                                 </Pagination>
+                            </div>
+                        </div>
+                    </TabsContent>
+
+                    {/* RESIZABLE TAB */}
+                    <TabsContent value="resizable">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" />
+                                        <Label>Layout</Label>
+                                    </div>
+                                    <p className="text-muted-foreground">
+                                        Accessible resizable panel groups and layouts with keyboard support.
+                                    </p>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <ResizablePanelGroup
+                                    direction="horizontal"
+                                    className="max-w-md rounded-lg border md:min-w-[450px]"
+                                >
+                                    <ResizablePanel defaultSize={50}>
+                                        <div className="flex h-[200px] items-center justify-center p-6">
+                                            <span className="font-semibold">One</span>
+                                        </div>
+                                    </ResizablePanel>
+                                    <ResizableHandle withHandle />
+                                    <ResizablePanel defaultSize={50}>
+                                        <ResizablePanelGroup direction="vertical">
+                                            <ResizablePanel defaultSize={25}>
+                                                <div className="flex h-full items-center justify-center p-6">
+                                                    <span className="font-semibold">Two</span>
+                                                </div>
+                                            </ResizablePanel>
+                                            <ResizableHandle withHandle />
+                                            <ResizablePanel defaultSize={75}>
+                                                <div className="flex h-full items-center justify-center p-6">
+                                                    <span className="font-semibold">Three</span>
+                                                </div>
+                                            </ResizablePanel>
+                                        </ResizablePanelGroup>
+                                    </ResizablePanel>
+                                </ResizablePanelGroup>
                             </div>
                         </div>
                     </TabsContent>
