@@ -1,0 +1,116 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { Card } from "@/components/ui/card";
+import { RotateCw, Palette, Zap } from "lucide-react";
+
+export const Playground = () => {
+    const [rotation, setRotation] = useState([0]);
+    const [scale, setScale] = useState([1]);
+    const [isGlow, setIsGlow] = useState(false);
+
+    return (
+        <section id="playground" className="py-24 relative overflow-hidden">
+            <div className="container px-4">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-center mb-16"
+                >
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+                        Interactive <span className="text-gradient">Playground</span>
+                    </h2>
+                    <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                        Test our components and animations in real-time. Tweak values and see
+                        immediate results.
+                    </p>
+                </motion.div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    {/* Controls */}
+                    <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                        <div className="space-y-4">
+                            <div className="flex items-center justify-between">
+                                <Label className="flex items-center gap-2">
+                                    <RotateCw className="w-4 h-4" /> Rotation ({rotation[0]}°)
+                                </Label>
+                            </div>
+                            <Slider
+                                value={rotation}
+                                onValueChange={setRotation}
+                                max={360}
+                                step={1}
+                                className="w-full"
+                            />
+                        </div>
+
+                        <div className="space-y-4">
+                            <div className="flex items-center justify-between">
+                                <Label className="flex items-center gap-2">
+                                    <Palette className="w-4 h-4" /> Scale ({scale[0]}x)
+                                </Label>
+                            </div>
+                            <Slider
+                                value={scale}
+                                onValueChange={setScale}
+                                min={0.5}
+                                max={2}
+                                step={0.1}
+                                className="w-full"
+                            />
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                            <Label className="flex items-center gap-2">
+                                <Zap className="w-4 h-4" /> Glow Effect
+                            </Label>
+                            <Switch checked={isGlow} onCheckedChange={setIsGlow} />
+                        </div>
+
+                        <div className="pt-4 flex gap-4">
+                            <Button
+                                onClick={() => {
+                                    setRotation([0]);
+                                    setScale([1]);
+                                    setIsGlow(false);
+                                }}
+                                variant="outline"
+                                className="w-full"
+                            >
+                                Reset
+                            </Button>
+                        </div>
+                    </div>
+
+                    {/* Preview */}
+                    <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden">
+                        <div className="absolute inset-0 grid-pattern opacity-50" />
+
+                        <motion.div
+                            animate={{
+                                rotate: rotation[0],
+                                scale: scale[0],
+                            }}
+                            transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                        >
+                            <Card className={`w-48 h-48 flex items-center justify-center bg-background border-2 transition-all duration-300 ${isGlow
+                                    ? "border-primary shadow-[0_0_50px_-12px_hsl(var(--primary))]"
+                                    : "border-border"
+                                }`}>
+                                <div className="text-center p-4">
+                                    <Zap className={`w-12 h-12 mx-auto mb-2 transition-colors ${isGlow ? "text-primary" : "text-muted-foreground"
+                                        }`} />
+                                    <span className="font-bold text-lg">Interactive Card</span>
+                                </div>
+                            </Card>
+                        </motion.div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+};
