@@ -16,6 +16,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -147,6 +148,10 @@ export const Playground = () => {
 
     // Radio Group State
     const [radioValue, setRadioValue] = useState("comfortable");
+
+    // Textarea State
+    const [textareaValue, setTextareaValue] = useState("");
+    const [textareaDisabled, setTextareaDisabled] = useState(false);
 
     const { toast } = useToast();
     const [activeTab, setActiveTab] = useState("card");
@@ -343,6 +348,11 @@ export const Playground = () => {
     </div>
   </TabsContent>
 </Tabs>`;
+        } else if (activeTab === "textarea") {
+            code = `<div className="grid w-full gap-1.5">
+  <Label htmlFor="message">Your message</Label>
+  <Textarea placeholder="Type your message here." id="message"${textareaDisabled ? ' disabled' : ''} />
+</div>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -372,7 +382,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[120rem] grid-cols-[repeat(19,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[125rem] grid-cols-[repeat(20,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -392,6 +402,7 @@ export const Playground = () => {
                             <TabsTrigger value="checkbox">Checkbox</TabsTrigger>
                             <TabsTrigger value="radio">Radio</TabsTrigger>
                             <TabsTrigger value="tabs">Tabs</TabsTrigger>
+                            <TabsTrigger value="textarea">Textarea</TabsTrigger>
                         </TabsList>
                     </div>
 
