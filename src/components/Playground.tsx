@@ -87,6 +87,16 @@ import {
     CommandShortcut,
 } from "@/components/ui/command";
 import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
+} from "@/components/ui/drawer";
+import {
     RotateCw,
     Palette,
     Zap,
@@ -629,6 +639,41 @@ export const Playground = () => {
     </CommandGroup>
   </CommandList>
 </Command>`;
+        } else if (activeTab === "drawer") {
+            code = `<Drawer>
+  <DrawerTrigger asChild>
+    <Button variant="outline">Open Drawer</Button>
+  </DrawerTrigger>
+  <DrawerContent>
+    <div className="mx-auto w-full max-w-sm">
+      <DrawerHeader>
+        <DrawerTitle>Move Goal</DrawerTitle>
+        <DrawerDescription>Set your daily activity goal.</DrawerDescription>
+      </DrawerHeader>
+      <div className="p-4 pb-0">
+        <div className="flex items-center justify-center space-x-2">
+          <Button variant="outline" size="icon" className="h-8 w-8 shrink-0 rounded-full">
+            -
+          </Button>
+          <div className="flex-1 text-center">
+            <div className="text-7xl font-bold tracking-tighter">400</div>
+            <div className="text-[0.70rem] uppercase text-muted-foreground">Calories/day</div>
+          </div>
+          <Button variant="outline" size="icon" className="h-8 w-8 shrink-0 rounded-full">
+            +
+          </Button>
+        </div>
+        <div className="mt-3 h-[120px]">Chart Area</div>
+      </div>
+      <DrawerFooter>
+        <Button>Submit</Button>
+        <DrawerClose asChild>
+          <Button variant="outline">Cancel</Button>
+        </DrawerClose>
+      </DrawerFooter>
+    </div>
+  </DrawerContent>
+</Drawer>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -658,7 +703,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[175rem] grid-cols-[repeat(30,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[180rem] grid-cols-[repeat(31,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -689,6 +734,7 @@ export const Playground = () => {
                             <TabsTrigger value="resizable">Resizable</TabsTrigger>
                             <TabsTrigger value="skeleton">Skeleton</TabsTrigger>
                             <TabsTrigger value="command">Command</TabsTrigger>
+                            <TabsTrigger value="drawer">Drawer</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -2536,6 +2582,90 @@ export const Playground = () => {
                                         </CommandGroup>
                                     </CommandList>
                                 </Command>
+                            </div>
+                        </div>
+                    </TabsContent>
+
+                    {/* DRAWER TAB */}
+                    <TabsContent value="drawer">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" />
+                                        <Label>Overlay</Label>
+                                    </div>
+                                    <p className="text-muted-foreground">
+                                        A drawer component for React.
+                                    </p>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <Drawer>
+                                    <DrawerTrigger asChild>
+                                        <Button variant="outline">Open Drawer</Button>
+                                    </DrawerTrigger>
+                                    <DrawerContent>
+                                        <div className="mx-auto w-full max-w-sm">
+                                            <DrawerHeader>
+                                                <DrawerTitle>Move Goal</DrawerTitle>
+                                                <DrawerDescription>Set your daily activity goal.</DrawerDescription>
+                                            </DrawerHeader>
+                                            <div className="p-4 pb-0">
+                                                <div className="flex items-center justify-center space-x-2">
+                                                    <Button
+                                                        variant="outline"
+                                                        size="icon"
+                                                        className="h-8 w-8 shrink-0 rounded-full"
+                                                        disabled
+                                                    >
+                                                        <span className="sr-only">Decrease</span>
+                                                        <span className="text-lg">-</span>
+                                                    </Button>
+                                                    <div className="flex-1 text-center">
+                                                        <div className="text-7xl font-bold tracking-tighter">
+                                                            400
+                                                        </div>
+                                                        <div className="text-[0.70rem] uppercase text-muted-foreground">
+                                                            Calories/day
+                                                        </div>
+                                                    </div>
+                                                    <Button
+                                                        variant="outline"
+                                                        size="icon"
+                                                        className="h-8 w-8 shrink-0 rounded-full"
+                                                        disabled
+                                                    >
+                                                        <span className="sr-only">Increase</span>
+                                                        <span className="text-lg">+</span>
+                                                    </Button>
+                                                </div>
+                                                <div className="mt-3 h-[120px]">
+                                                    <div className="h-full w-full bg-muted/20 rounded-md flex items-center justify-center text-xs text-muted-foreground">
+                                                        Chart Area
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <DrawerFooter>
+                                                <Button>Submit</Button>
+                                                <DrawerClose asChild>
+                                                    <Button variant="outline">Cancel</Button>
+                                                </DrawerClose>
+                                            </DrawerFooter>
+                                        </div>
+                                    </DrawerContent>
+                                </Drawer>
                             </div>
                         </div>
                     </TabsContent>
