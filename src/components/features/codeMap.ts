@@ -27,6 +27,8 @@ import TableDemoCode from "./TableDemo.tsx?raw";
 import SearchDemoCode from "./SearchDemo.tsx?raw";
 // @ts-ignore
 import InfiniteScrollDemoCode from "./InfiniteScrollDemo.tsx?raw";
+// @ts-ignore
+import ToastDemoCode from "./ToastDemo.tsx?raw";
 
 export const featureCodeMap: Record<string, string> = {
   // Specific Demos
@@ -55,7 +57,7 @@ export const featureCodeMap: Record<string, string> = {
   "Hover-Based UI Highlights": InteractionDemoCode,
   "Focus Ring Manager": InteractionDemoCode,
   "Touch-Friendly Mode": InteractionDemoCode,
-  "Smart Toast Notifications": InteractionDemoCode,
+  "Smart Toast Notifications": ToastDemoCode,
   "Skeleton Loaders": InteractionDemoCode,
   "Tooltips with Delay": InteractionDemoCode,
   "High Contrast Mode": InteractionDemoCode,
