@@ -11,6 +11,7 @@ import { GenericFeatureDemo } from "./features/GenericFeatureDemo";
 import { ResizablePanelsDemo } from "./features/ResizablePanelsDemo";
 import { StickyLayoutDemo } from "./features/StickyLayoutDemo";
 import { BreadcrumbDemo } from "./features/BreadcrumbDemo";
+import { TableDemo } from "./features/TableDemo";
 import { FontFamilyDemo } from "./features/FontFamilyDemo";
 import { LayoutDemo } from "./features/LayoutDemo";
 import { InteractionDemo } from "./features/InteractionDemo";
@@ -34,6 +35,7 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
   const [showResizableDemo, setShowResizableDemo] = useState(false);
   const [showStickyDemo, setShowStickyDemo] = useState(false);
   const [showBreadcrumbDemo, setShowBreadcrumbDemo] = useState(false);
+  const [showTableDemo, setShowTableDemo] = useState(false);
   const [showLayoutDemo, setShowLayoutDemo] = useState(false);
   const [showInteractionDemo, setShowInteractionDemo] = useState(false);
   const [showStateDemo, setShowStateDemo] = useState(false);
@@ -101,6 +103,10 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       setShowBreadcrumbDemo(true);
       return;
     }
+    if (feature.title.includes("Table") || feature.title.includes("Sort")) {
+      setShowTableDemo(true);
+      return;
+    }
 
     // Layout & Navigation group
     if (feature.title.includes("Layout") || feature.title.includes("Grid") || feature.title.includes("Sidebar") || feature.title.includes("Panel") || feature.title.includes("Nav") || feature.title.includes("Header") || feature.title.includes("Footer") || feature.title.includes("List") || feature.title.includes("Table") || feature.title.includes("Sort") || feature.title.includes("Filter") || feature.title.includes("Search") || feature.title.includes("Infinite") || feature.title.includes("Lazy") || feature.title.includes("Orientation")) {
@@ -143,6 +149,9 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       )}
       {feature.title.includes("Breadcrumb") && (
         <BreadcrumbDemo open={showBreadcrumbDemo} onOpenChange={setShowBreadcrumbDemo} />
+      )}
+      {(feature.title.includes("Table") || feature.title.includes("Sort")) && (
+        <TableDemo open={showTableDemo} onOpenChange={setShowTableDemo} />
       )}
 
       <LayoutDemo open={showLayoutDemo} onOpenChange={setShowLayoutDemo} title={feature.title} />

@@ -21,6 +21,8 @@ import ResizablePanelsDemoCode from "./ResizablePanelsDemo.tsx?raw";
 import StickyLayoutDemoCode from "./StickyLayoutDemo.tsx?raw";
 // @ts-ignore
 import BreadcrumbDemoCode from "./BreadcrumbDemo.tsx?raw";
+// @ts-ignore
+import TableDemoCode from "./TableDemo.tsx?raw";
 
 export const featureCodeMap: Record<string, string> = {
   // Specific Demos
@@ -38,9 +40,9 @@ export const featureCodeMap: Record<string, string> = {
   "Orientation-Based Layout": LayoutDemoCode,
   "Breadcrumb Navigation": LayoutDemoCode,
   "Layout Navigation": LayoutDemoCode,
-  "Customizable Tables": LayoutDemoCode,
+  "Customizable Tables": TableDemoCode,
   "Expandable Sections": LayoutDemoCode,
-  "Filter & Sort Engine": LayoutDemoCode,
+  "Filter & Sort Engine": TableDemoCode,
   "Smart Search with Highlighting": LayoutDemoCode,
   "Infinite Scroll / Lazy Load": LayoutDemoCode,
 
