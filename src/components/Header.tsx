@@ -1,11 +1,34 @@
 import { motion } from "framer-motion";
-import { Command, Sparkles, Menu, LogIn } from "lucide-react";
+import { Command, Sparkles, Menu, LogIn, LogOut } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { User } from "@supabase/supabase-js";
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+  };
 
   const triggerCommandPalette = () => {
     const event = new KeyboardEvent("keydown", {
@@ -62,16 +85,28 @@ export const Header = () => {
             
             <ThemeToggle />
             
-            <Link to="/auth">
+            {user ? (
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary transition-colors text-sm font-medium border border-primary/20"
+                onClick={handleSignOut}
+                className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-500 transition-colors text-sm font-medium border border-red-500/20"
               >
-                <LogIn className="w-4 h-4" />
-                Sign In
+                <LogOut className="w-4 h-4" />
+                Sign Out
               </motion.button>
-            </Link>
+            ) : (
+              <Link to="/auth">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary transition-colors text-sm font-medium border border-primary/20"
+                >
+                  <LogIn className="w-4 h-4" />
+                  Sign In
+                </motion.button>
+              </Link>
+            )}
 
             <button
               className="md:hidden p-2 rounded-lg hover:bg-secondary transition-colors"
@@ -94,12 +129,21 @@ export const Header = () => {
               <MobileNavLink href="#features">Features</MobileNavLink>
               <MobileNavLink href="#playground">Playground</MobileNavLink>
               <MobileNavLink href="#docs">Docs</MobileNavLink>
-              <Link
-                to="/auth"
-                className="px-4 py-2 rounded-lg bg-primary/10 text-primary font-medium text-center"
-              >
-                Sign In
-              </Link>
+              {user ? (
+                <button
+                  onClick={handleSignOut}
+                  className="px-4 py-2 rounded-lg bg-red-500/10 text-red-500 font-medium text-center w-full"
+                >
+                  Sign Out
+                </button>
+              ) : (
+                <Link
+                  to="/auth"
+                  className="px-4 py-2 rounded-lg bg-primary/10 text-primary font-medium text-center"
+                >
+                  Sign In
+                </Link>
+              )}
             </div>
           </motion.div>
         )}
