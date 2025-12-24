@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Command, Sparkles, Menu, LogIn, LogOut } from "lucide-react";
+import { Command, Sparkles, Menu, LogIn, LogOut, UserCircle } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -82,19 +82,31 @@ export const Header = () => {
                 ⌘K
               </kbd>
             </motion.button>
-            
+
             <ThemeToggle />
-            
+
             {user ? (
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleSignOut}
-                className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-500 transition-colors text-sm font-medium border border-red-500/20"
-              >
-                <LogOut className="w-4 h-4" />
-                Sign Out
-              </motion.button>
+              <div className="flex items-center gap-3">
+                <Link to="/profile">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary transition-colors text-sm font-medium border border-primary/20"
+                  >
+                    <UserCircle className="w-4 h-4" />
+                    Profile
+                  </motion.button>
+                </Link>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleSignOut}
+                  className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-500 transition-colors text-sm font-medium border border-red-500/20"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Sign Out
+                </motion.button>
+              </div>
             ) : (
               <Link to="/auth">
                 <motion.button
