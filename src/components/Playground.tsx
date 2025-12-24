@@ -26,6 +26,12 @@ import {
 } from "@/components/ui/collapsible";
 import { Progress } from "@/components/ui/progress";
 import {
+    ContextMenu,
+    ContextMenuContent,
+    ContextMenuItem,
+    ContextMenuTrigger,
+} from "@/components/ui/context-menu";
+import {
     RotateCw,
     Palette,
     Zap,
@@ -398,6 +404,16 @@ export const Playground = () => {
 </Collapsible>`;
         } else if (activeTab === "progress") {
             code = `<Progress value={33} />`;
+        } else if (activeTab === "context-menu") {
+            code = `<ContextMenu>
+  <ContextMenuTrigger>Right click</ContextMenuTrigger>
+  <ContextMenuContent>
+    <ContextMenuItem>Profile</ContextMenuItem>
+    <ContextMenuItem>Billing</ContextMenuItem>
+    <ContextMenuItem>Team</ContextMenuItem>
+    <ContextMenuItem>Subscription</ContextMenuItem>
+  </ContextMenuContent>
+</ContextMenu>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -427,7 +443,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[135rem] grid-cols-[repeat(22,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[140rem] grid-cols-[repeat(23,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -450,6 +466,7 @@ export const Playground = () => {
                             <TabsTrigger value="textarea">Textarea</TabsTrigger>
                             <TabsTrigger value="collapsible">Collapsible</TabsTrigger>
                             <TabsTrigger value="progress">Progress</TabsTrigger>
+                            <TabsTrigger value="context-menu">Context Menu</TabsTrigger>
                         </TabsList>
                     </div>
 
