@@ -142,6 +142,9 @@ export const Playground = () => {
     // Slider State
     const [sliderValue, setSliderValue] = useState([50]);
 
+    // Checkbox State
+    const [checkboxChecked, setCheckboxChecked] = useState(false);
+
     const { toast } = useToast();
     const [activeTab, setActiveTab] = useState("card");
 
@@ -295,6 +298,16 @@ export const Playground = () => {
 </Select>`;
         } else if (activeTab === "slider") {
             code = `<Slider defaultValue={[50]} max={100} step={1} />`;
+        } else if (activeTab === "checkbox") {
+            code = `<div className="flex items-center space-x-2">
+  <Checkbox id="terms" />
+  <label
+    htmlFor="terms"
+    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+  >
+    Accept terms and conditions
+  </label>
+</div>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -324,7 +337,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[105rem] grid-cols-[repeat(16,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[110rem] grid-cols-[repeat(17,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -341,6 +354,7 @@ export const Playground = () => {
                             <TabsTrigger value="switch">Switch</TabsTrigger>
                             <TabsTrigger value="select">Select</TabsTrigger>
                             <TabsTrigger value="slider">Slider</TabsTrigger>
+                            <TabsTrigger value="checkbox">Checkbox</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -1367,6 +1381,53 @@ export const Playground = () => {
                                         value={sliderValue}
                                         onValueChange={setSliderValue}
                                     />
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+                    {/* CHECKBOX TAB */}
+                    <TabsContent value="checkbox">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <div className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" />
+                                        <Label>Status</Label>
+                                    </div>
+                                    <div className="p-4 rounded-md bg-muted/50 border font-mono text-sm">
+                                        {checkboxChecked ? "Checked" : "Unchecked"}
+                                    </div>
+                                    <p className="text-sm text-muted-foreground">
+                                        Checkboxes are used when a user may select zero to many options from a list.
+                                    </p>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <div className="flex items-center space-x-2 p-6 bg-background/50 rounded-lg border backdrop-blur-sm">
+                                    <Checkbox
+                                        id="terms"
+                                        checked={checkboxChecked}
+                                        onCheckedChange={(c) => setCheckboxChecked(!!c)}
+                                    />
+                                    <div className="grid gap-1.5 leading-none">
+                                        <Label htmlFor="terms" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                            Accept terms and conditions
+                                        </Label>
+                                        <p className="text-sm text-muted-foreground">
+                                            You agree to our Terms of Service and Privacy Policy.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
