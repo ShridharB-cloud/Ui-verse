@@ -122,6 +122,11 @@ export const Playground = () => {
     const [avatarFallback, setAvatarFallback] = useState("CN");
     const [showAvatarImage, setShowAvatarImage] = useState(true);
 
+    // Switch State
+    const [switchChecked, setSwitchChecked] = useState(false);
+    const [switchLabel, setSwitchLabel] = useState("Airplane Mode");
+    const [switchDisabled, setSwitchDisabled] = useState(false);
+
     const { toast } = useToast();
     const [activeTab, setActiveTab] = useState("card");
 
@@ -252,6 +257,11 @@ export const Playground = () => {
     ))}
   </div>
 </ScrollArea>`;
+        } else if (activeTab === "switch") {
+            code = `<div className="flex items-center space-x-2">
+  <Switch id="airplane-mode"${switchDisabled ? ' disabled' : ''} />
+  <Label htmlFor="airplane-mode">${switchLabel}</Label>
+</div>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -281,7 +291,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[90rem] grid-cols-[repeat(13,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[95rem] grid-cols-[repeat(14,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -295,6 +305,7 @@ export const Playground = () => {
                             <TabsTrigger value="badge">Badge</TabsTrigger>
                             <TabsTrigger value="avatar">Avatar</TabsTrigger>
                             <TabsTrigger value="scroll">Scroll</TabsTrigger>
+                            <TabsTrigger value="switch">Switch</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -1180,6 +1191,57 @@ export const Playground = () => {
                                             ))}
                                         </div>
                                     </ScrollArea>
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+                    {/* SWITCH TAB */}
+                    <TabsContent value="switch">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <Label className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" /> Switch Label
+                                    </Label>
+                                    <Input
+                                        value={switchLabel}
+                                        onChange={(e) => setSwitchLabel(e.target.value)}
+                                        placeholder="Enter label"
+                                        className="bg-background/50 border-white/10"
+                                    />
+                                </div>
+
+                                <div className="space-y-4">
+                                    <div className="flex items-center space-x-2">
+                                        <Checkbox
+                                            id="switch-disabled"
+                                            checked={switchDisabled}
+                                            onCheckedChange={(c) => setSwitchDisabled(!!c)}
+                                        />
+                                        <Label htmlFor="switch-disabled">Disabled State</Label>
+                                    </div>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <div className="flex items-center gap-4 p-6 bg-background/50 rounded-lg border backdrop-blur-sm">
+                                    <Switch
+                                        id="airplane-mode"
+                                        checked={switchChecked}
+                                        onCheckedChange={setSwitchChecked}
+                                        disabled={switchDisabled}
+                                    />
+                                    <Label htmlFor="airplane-mode">{switchLabel}</Label>
                                 </div>
                             </div>
                         </div>
