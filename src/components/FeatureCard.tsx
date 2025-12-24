@@ -7,6 +7,13 @@ import { ColorPickerDemo } from "./features/ColorPickerDemo";
 import { FeatureDetailsDialog } from "./features/FeatureDetailsDialog";
 import { FeatureSettingsDialog } from "./features/FeatureSettingsDialog";
 import { ThemeSwitcherDemo } from "./features/ThemeSwitcherDemo";
+import { GenericFeatureDemo } from "./features/GenericFeatureDemo";
+import { ResizablePanelsDemo } from "./features/ResizablePanelsDemo";
+import { StickyLayoutDemo } from "./features/StickyLayoutDemo";
+import { FontFamilyDemo } from "./features/FontFamilyDemo";
+import { LayoutDemo } from "./features/LayoutDemo";
+import { InteractionDemo } from "./features/InteractionDemo";
+import { StateDemo } from "./features/StateDemo";
 import type { Tables } from "@/integrations/supabase/types";
 
 type Feature = Tables<"features">;
@@ -22,6 +29,13 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [showThemeSwitcher, setShowThemeSwitcher] = useState(false);
+  const [showFontFamilyDemo, setShowFontFamilyDemo] = useState(false);
+  const [showResizableDemo, setShowResizableDemo] = useState(false);
+  const [showStickyDemo, setShowStickyDemo] = useState(false);
+  const [showLayoutDemo, setShowLayoutDemo] = useState(false);
+  const [showInteractionDemo, setShowInteractionDemo] = useState(false);
+  const [showStateDemo, setShowStateDemo] = useState(false);
+  const [showGenericDemo, setShowGenericDemo] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
@@ -67,10 +81,41 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       return;
     }
 
-    toast({
-      title: "Demo Coming Soon",
-      description: "This feature is active! A visual demo is being built.",
-    });
+    if (feature.title === "Font Family Switcher") {
+      setShowFontFamilyDemo(true);
+      return;
+    }
+
+    // Specific Layout Overrides
+    if (feature.title.includes("Resizable Panels")) {
+      setShowResizableDemo(true);
+      return;
+    }
+    if (feature.title.includes("Sticky Header")) {
+      setShowStickyDemo(true);
+      return;
+    }
+
+    // Layout & Navigation group
+    if (feature.title.includes("Layout") || feature.title.includes("Grid") || feature.title.includes("Sidebar") || feature.title.includes("Panel") || feature.title.includes("Nav") || feature.title.includes("Header") || feature.title.includes("Footer") || feature.title.includes("List") || feature.title.includes("Table") || feature.title.includes("Sort") || feature.title.includes("Filter") || feature.title.includes("Search") || feature.title.includes("Infinite") || feature.title.includes("Lazy") || feature.title.includes("Orientation")) {
+      setShowLayoutDemo(true);
+      return;
+    }
+
+    // Interaction & UX group
+    if (feature.title.includes("Interaction") || feature.title.includes("Hover") || feature.title.includes("Focus") || feature.title.includes("Touch") || feature.title.includes("Toast") || feature.title.includes("Skeleton") || feature.title.includes("Tooltip") || feature.title.includes("High Contrast") || feature.title.includes("Motion") || feature.title.includes("Screen Reader") || feature.title.includes("ARIA") || feature.title.includes("Keyboard") || feature.title.includes("Device") || feature.title.includes("Help")) {
+      setShowInteractionDemo(true);
+      return;
+    }
+
+    // State, Persistence & System Status group
+    if (feature.title.includes("State") || feature.title.includes("Save") || feature.title.includes("Undo") || feature.title.includes("Session") || feature.title.includes("Draft") || feature.title.includes("History") || feature.title.includes("Offline") || feature.title.includes("Network") || feature.title.includes("Battery") || feature.title.includes("Error") || feature.title.includes("Flag") || feature.title.includes("Role")) {
+      setShowStateDemo(true);
+      return;
+    }
+
+    // Universal fallback for complex system/meta features where generic demo is most appropriate
+    setShowGenericDemo(true);
   };
 
   return (
@@ -81,6 +126,20 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       {(feature.title === "Theme Switcher" || feature.title === "Dark / Light / System Mode") && (
         <ThemeSwitcherDemo open={showThemeSwitcher} onOpenChange={setShowThemeSwitcher} />
       )}
+      {feature.title === "Font Family Switcher" && (
+        <FontFamilyDemo open={showFontFamilyDemo} onOpenChange={setShowFontFamilyDemo} />
+      )}
+      {feature.title.includes("Resizable Panels") && (
+        <ResizablePanelsDemo open={showResizableDemo} onOpenChange={setShowResizableDemo} />
+      )}
+      {feature.title.includes("Sticky Header") && (
+        <StickyLayoutDemo open={showStickyDemo} onOpenChange={setShowStickyDemo} />
+      )}
+
+      <LayoutDemo open={showLayoutDemo} onOpenChange={setShowLayoutDemo} title={feature.title} />
+      <InteractionDemo open={showInteractionDemo} onOpenChange={setShowInteractionDemo} title={feature.title} />
+      <StateDemo open={showStateDemo} onOpenChange={setShowStateDemo} title={feature.title} />
+      <GenericFeatureDemo open={showGenericDemo} onOpenChange={setShowGenericDemo} feature={feature} />
       <FeatureDetailsDialog open={showDetails} onOpenChange={setShowDetails} feature={feature} />
       <FeatureSettingsDialog open={showSettings} onOpenChange={setShowSettings} feature={feature} />
 
