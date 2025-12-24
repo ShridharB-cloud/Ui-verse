@@ -286,6 +286,9 @@ export const Playground = () => {
     // Progress State
     const [progress, setProgress] = React.useState(13);
 
+    // Date Picker State
+    const [date, setDate] = React.useState<Date>();
+
     useEffect(() => {
         const timer = setTimeout(() => setProgress(66), 500);
         return () => clearTimeout(timer);
@@ -875,6 +878,51 @@ export function InputForm() {
 >
   Show Toast
 </Button>`;
+        } else if (activeTab === "date-picker") {
+            code = `"use client"
+
+import * as React from "react"
+import { format } from "date-fns"
+import { Calendar as CalendarIcon } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+
+export function DatePickerDemo() {
+  const [date, setDate] = React.useState<Date>()
+
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant={"outline"}
+          className={cn(
+            "w-[280px] justify-start text-left font-normal",
+            !date && "text-muted-foreground"
+          )}
+        >
+          <CalendarIcon className="mr-2 h-4 w-4" />
+          {date ? format(date, "PPP") : <span>Pick a date</span>}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0">
+        <Calendar
+          mode="single"
+          selected={date}
+          onSelect={setDate}
+          initialFocus
+        />
+      </PopoverContent>
+    </Popover>
+  )
+}
+`;
         }
 
         navigator.clipboard.writeText(code);
@@ -904,7 +952,7 @@ export function InputForm() {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[210rem] grid-cols-[repeat(37,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[215rem] grid-cols-[repeat(38,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -942,6 +990,7 @@ export function InputForm() {
                             <TabsTrigger value="breadcrumb">Breadcrumb</TabsTrigger>
                             <TabsTrigger value="chart">Chart</TabsTrigger>
                             <TabsTrigger value="sonner">Sonner</TabsTrigger>
+                            <TabsTrigger value="date-picker">Date Picker</TabsTrigger>
                         </TabsList>
                     </div>
 
