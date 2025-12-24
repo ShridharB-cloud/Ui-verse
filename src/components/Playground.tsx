@@ -19,7 +19,8 @@ import {
     Type,
     TextCursorInput,
     Ban,
-    MessageSquare
+    MessageSquare,
+    AlertCircle
 } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
@@ -49,6 +50,17 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export const Playground = () => {
     // Card State
@@ -165,6 +177,22 @@ export const Playground = () => {
     </SheetHeader>
   </SheetContent>
 </Sheet>`;
+        } else if (activeTab === "alert") {
+            code = `<AlertDialog>
+  <AlertDialogTrigger>Open</AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+      <AlertDialogDescription>
+        This action cannot be undone.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction>Continue</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -194,7 +222,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-3xl grid-cols-8">
+                        <TabsList className="grid w-full max-w-4xl grid-cols-9">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -203,6 +231,7 @@ export const Playground = () => {
                             <TabsTrigger value="accordion">Accordion</TabsTrigger>
                             <TabsTrigger value="popover">Popover</TabsTrigger>
                             <TabsTrigger value="sheet">Sheet</TabsTrigger>
+                            <TabsTrigger value="alert">Alert</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -806,6 +835,64 @@ export const Playground = () => {
                                     </Sheet>
                                     <p className="mt-8 text-sm text-muted-foreground">
                                         Click to open the side drawer
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+                    {/* ALERT TAB */}
+                    <TabsContent value="alert">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <Label className="flex items-center gap-2 mb-4">
+                                        <AlertCircle className="w-4 h-4" /> Description
+                                    </Label>
+                                    <p className="text-sm text-muted-foreground">
+                                        Alert Dialogs are interruptive modals that require user acknowledgement.
+                                        They are typically used for confirmation of destructive actions.
+                                    </p>
+                                    <div className="p-4 bg-destructive/10 rounded-lg border border-destructive/20">
+                                        <p className="text-sm text-destructive font-medium flex items-center gap-2">
+                                            <AlertCircle className="w-4 h-4" />
+                                            Destructive Action Demo
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <div className="text-center">
+                                    <AlertDialog>
+                                        <AlertDialogTrigger asChild>
+                                            <Button variant="destructive">Delete Account</Button>
+                                        </AlertDialogTrigger>
+                                        <AlertDialogContent>
+                                            <AlertDialogHeader>
+                                                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                                <AlertDialogDescription>
+                                                    This action cannot be undone. This will permanently delete your account
+                                                    and remove your data from our servers.
+                                                </AlertDialogDescription>
+                                            </AlertDialogHeader>
+                                            <AlertDialogFooter>
+                                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                <AlertDialogAction className="bg-destructive text-destructive-foreground hover:bg-destructive/90">Continue</AlertDialogAction>
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                    </AlertDialog>
+                                    <p className="mt-8 text-sm text-muted-foreground">
+                                        Click to test the confirmation flow
                                     </p>
                                 </div>
                             </div>
