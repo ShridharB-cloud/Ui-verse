@@ -22,6 +22,14 @@ import {
     MessageSquare
 } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 
 export const Playground = () => {
     // Card State
@@ -42,6 +50,10 @@ export const Playground = () => {
     const [toastTitle, setToastTitle] = useState("Notification");
     const [toastDesc, setToastDesc] = useState("Action completed successfully.");
     const [toastVariant, setToastVariant] = useState<"default" | "destructive">("default");
+
+    // Dialog State
+    const [dialogTitle, setDialogTitle] = useState("Are you sure?");
+    const [dialogDesc, setDialogDesc] = useState("This action cannot be undone.");
 
     const { toast } = useToast();
     const [activeTab, setActiveTab] = useState("card");
@@ -77,7 +89,17 @@ export const Playground = () => {
   title: "${toastTitle}",
   description: "${toastDesc}",
   variant: "${toastVariant}"
-});`
+});`;
+        } else if (activeTab === "dialog") {
+            code = `<Dialog>
+  <DialogTrigger>Open</DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>${dialogTitle}</DialogTitle>
+      <DialogDescription>${dialogDesc}</DialogDescription>
+    </DialogHeader>
+  </DialogContent>
+</Dialog>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -107,11 +129,12 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-md grid-cols-4">
+                        <TabsList className="grid w-full max-w-md grid-cols-5">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
                             <TabsTrigger value="toast">Toast</TabsTrigger>
+                            <TabsTrigger value="dialog">Dialog</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -435,6 +458,80 @@ export const Playground = () => {
                                     </Button>
                                     <p className="mt-4 text-sm text-muted-foreground">
                                         Click to see the notification
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+                    {/* DIALOG TAB */}
+                    <TabsContent value="dialog">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <Label className="flex items-center gap-2">
+                                        <Type className="w-4 h-4" /> Dialog Title
+                                    </Label>
+                                    <Input
+                                        value={dialogTitle}
+                                        onChange={(e) => setDialogTitle(e.target.value)}
+                                        placeholder="Dialog title..."
+                                        className="bg-secondary/50"
+                                    />
+                                </div>
+
+                                <div className="space-y-4">
+                                    <Label className="flex items-center gap-2">
+                                        <TextCursorInput className="w-4 h-4" /> Dialog Content
+                                    </Label>
+                                    <Input
+                                        value={dialogDesc}
+                                        onChange={(e) => setDialogDesc(e.target.value)}
+                                        placeholder="Dialog content..."
+                                        className="bg-secondary/50"
+                                    />
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button
+                                        onClick={() => {
+                                            setDialogTitle("Are you sure?");
+                                            setDialogDesc("This action cannot be undone.");
+                                        }}
+                                        variant="outline"
+                                        className="flex-1"
+                                    >
+                                        Reset
+                                    </Button>
+                                    <Button onClick={copyCode} className="flex-1 gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <div className="text-center">
+                                    <Dialog>
+                                        <DialogTrigger asChild>
+                                            <Button size="lg" className="gap-2">
+                                                <Maximize2 className="w-4 h-4" />
+                                                Open Dialog
+                                            </Button>
+                                        </DialogTrigger>
+                                        <DialogContent>
+                                            <DialogHeader>
+                                                <DialogTitle>{dialogTitle}</DialogTitle>
+                                                <DialogDescription>
+                                                    {dialogDesc}
+                                                </DialogDescription>
+                                            </DialogHeader>
+                                        </DialogContent>
+                                    </Dialog>
+                                    <p className="mt-4 text-sm text-muted-foreground">
+                                        Click to open the modal
                                     </p>
                                 </div>
                             </div>
