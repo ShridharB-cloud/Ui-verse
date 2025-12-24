@@ -952,7 +952,7 @@ export function DatePickerDemo() {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[215rem] grid-cols-[repeat(38,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[220rem] grid-cols-[repeat(39,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -991,6 +991,7 @@ export function DatePickerDemo() {
                             <TabsTrigger value="chart">Chart</TabsTrigger>
                             <TabsTrigger value="sonner">Sonner</TabsTrigger>
                             <TabsTrigger value="date-picker">Date Picker</TabsTrigger>
+                            <TabsTrigger value="toggle-group">Toggle Group</TabsTrigger>
                         </TabsList>
                     </div>
 
