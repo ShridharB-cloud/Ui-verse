@@ -32,6 +32,21 @@ import {
     ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import {
+    Menubar,
+    MenubarCheckboxItem,
+    MenubarContent,
+    MenubarItem,
+    MenubarMenu,
+    MenubarRadioGroup,
+    MenubarRadioItem,
+    MenubarSeparator,
+    MenubarShortcut,
+    MenubarSub,
+    MenubarSubContent,
+    MenubarSubTrigger,
+    MenubarTrigger,
+} from "@/components/ui/menubar";
+import {
     RotateCw,
     Palette,
     Zap,
@@ -414,6 +429,24 @@ export const Playground = () => {
     <ContextMenuItem>Subscription</ContextMenuItem>
   </ContextMenuContent>
 </ContextMenu>`;
+        } else if (activeTab === "menubar") {
+            code = `<Menubar>
+  <MenubarMenu>
+    <MenubarTrigger>File</MenubarTrigger>
+    <MenubarContent>
+      <MenubarItem>
+        New Tab <MenubarShortcut>⌘T</MenubarShortcut>
+      </MenubarItem>
+      <MenubarItem>
+        New Window <MenubarShortcut>⌘N</MenubarShortcut>
+      </MenubarItem>
+      <MenubarSeparator />
+      <MenubarItem>Share</MenubarItem>
+      <MenubarSeparator />
+      <MenubarItem>Print</MenubarItem>
+    </MenubarContent>
+  </MenubarMenu>
+</Menubar>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -443,7 +476,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[140rem] grid-cols-[repeat(23,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[145rem] grid-cols-[repeat(24,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -467,6 +500,7 @@ export const Playground = () => {
                             <TabsTrigger value="collapsible">Collapsible</TabsTrigger>
                             <TabsTrigger value="progress">Progress</TabsTrigger>
                             <TabsTrigger value="context-menu">Context Menu</TabsTrigger>
+                            <TabsTrigger value="menubar">Menubar</TabsTrigger>
                         </TabsList>
                     </div>
 
