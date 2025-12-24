@@ -16,7 +16,11 @@ import StateDemoCode from "./StateDemo.tsx?raw";
 // @ts-ignore
 import ResizablePanelsDemoCode from "./ResizablePanelsDemo.tsx?raw";
 // @ts-ignore
+import ResizablePanelsDemoCode from "./ResizablePanelsDemo.tsx?raw";
+// @ts-ignore
 import StickyLayoutDemoCode from "./StickyLayoutDemo.tsx?raw";
+// @ts-ignore
+import BreadcrumbDemoCode from "./BreadcrumbDemo.tsx?raw";
 
 export const featureCodeMap: Record<string, string> = {
   // Specific Demos

@@ -10,6 +10,7 @@ import { ThemeSwitcherDemo } from "./features/ThemeSwitcherDemo";
 import { GenericFeatureDemo } from "./features/GenericFeatureDemo";
 import { ResizablePanelsDemo } from "./features/ResizablePanelsDemo";
 import { StickyLayoutDemo } from "./features/StickyLayoutDemo";
+import { BreadcrumbDemo } from "./features/BreadcrumbDemo";
 import { FontFamilyDemo } from "./features/FontFamilyDemo";
 import { LayoutDemo } from "./features/LayoutDemo";
 import { InteractionDemo } from "./features/InteractionDemo";
@@ -32,6 +33,7 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
   const [showFontFamilyDemo, setShowFontFamilyDemo] = useState(false);
   const [showResizableDemo, setShowResizableDemo] = useState(false);
   const [showStickyDemo, setShowStickyDemo] = useState(false);
+  const [showBreadcrumbDemo, setShowBreadcrumbDemo] = useState(false);
   const [showLayoutDemo, setShowLayoutDemo] = useState(false);
   const [showInteractionDemo, setShowInteractionDemo] = useState(false);
   const [showStateDemo, setShowStateDemo] = useState(false);
@@ -95,6 +97,10 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       setShowStickyDemo(true);
       return;
     }
+    if (feature.title.includes("Breadcrumb")) {
+      setShowBreadcrumbDemo(true);
+      return;
+    }
 
     // Layout & Navigation group
     if (feature.title.includes("Layout") || feature.title.includes("Grid") || feature.title.includes("Sidebar") || feature.title.includes("Panel") || feature.title.includes("Nav") || feature.title.includes("Header") || feature.title.includes("Footer") || feature.title.includes("List") || feature.title.includes("Table") || feature.title.includes("Sort") || feature.title.includes("Filter") || feature.title.includes("Search") || feature.title.includes("Infinite") || feature.title.includes("Lazy") || feature.title.includes("Orientation")) {
@@ -134,6 +140,9 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       )}
       {feature.title.includes("Sticky Header") && (
         <StickyLayoutDemo open={showStickyDemo} onOpenChange={setShowStickyDemo} />
+      )}
+      {feature.title.includes("Breadcrumb") && (
+        <BreadcrumbDemo open={showBreadcrumbDemo} onOpenChange={setShowBreadcrumbDemo} />
       )}
 
       <LayoutDemo open={showLayoutDemo} onOpenChange={setShowLayoutDemo} title={feature.title} />
