@@ -20,7 +20,8 @@ import {
     TextCursorInput,
     Ban,
     MessageSquare,
-    AlertCircle
+    AlertCircle,
+    Info,
 } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
@@ -61,6 +62,12 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export const Playground = () => {
     // Card State
@@ -94,6 +101,9 @@ export const Playground = () => {
 
     // Sheet State
     const [sheetSide, setSheetSide] = useState<"top" | "right" | "bottom" | "left">("right");
+
+    // Tooltip State
+    const [tooltipText, setTooltipText] = useState("Add to library");
 
     const { toast } = useToast();
     const [activeTab, setActiveTab] = useState("card");
@@ -193,6 +203,17 @@ export const Playground = () => {
     </AlertDialogFooter>
   </AlertDialogContent>
 </AlertDialog>`;
+        } else if (activeTab === "tooltip") {
+            code = `<TooltipProvider>
+  <Tooltip>
+    <TooltipTrigger asChild>
+      <Button variant="outline">Hover Me</Button>
+    </TooltipTrigger>
+    <TooltipContent>
+      <p>${tooltipText}</p>
+    </TooltipContent>
+  </Tooltip>
+</TooltipProvider>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -222,7 +243,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-4xl grid-cols-9">
+                        <TabsList className="grid w-full max-w-5xl grid-cols-10">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -232,6 +253,7 @@ export const Playground = () => {
                             <TabsTrigger value="popover">Popover</TabsTrigger>
                             <TabsTrigger value="sheet">Sheet</TabsTrigger>
                             <TabsTrigger value="alert">Alert</TabsTrigger>
+                            <TabsTrigger value="tooltip">Tooltip</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -893,6 +915,58 @@ export const Playground = () => {
                                     </AlertDialog>
                                     <p className="mt-8 text-sm text-muted-foreground">
                                         Click to test the confirmation flow
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+                    {/* TOOLTIP TAB */}
+                    <TabsContent value="tooltip">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <Label className="flex items-center gap-2 mb-4">
+                                        <Type className="w-4 h-4" /> Tooltip Text
+                                    </Label>
+                                    <Input
+                                        value={tooltipText}
+                                        onChange={(e) => setTooltipText(e.target.value)}
+                                        placeholder="Enter tooltip text"
+                                        className="bg-background/50 border-white/10"
+                                    />
+                                    <p className="text-sm text-muted-foreground mt-2">
+                                        Tooltips are used to provide extra information about an element when hovering or focusing.
+                                    </p>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button onClick={copyCode} className="w-full gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <div className="text-center">
+                                    <TooltipProvider>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <Button variant="outline" className="gap-2">
+                                                    <Info className="w-4 h-4" />
+                                                    Hover Me
+                                                </Button>
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                <p>{tooltipText}</p>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </TooltipProvider>
+                                    <p className="mt-8 text-sm text-muted-foreground">
+                                        Hover over the button to see the tooltip
                                     </p>
                                 </div>
                             </div>
