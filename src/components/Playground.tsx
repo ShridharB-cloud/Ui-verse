@@ -66,6 +66,11 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination";
 import {
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import {
     RotateCw,
     Palette,
     Zap,
@@ -77,6 +82,7 @@ import {
     Ban,
     MessageSquare,
     AlertCircle,
+    CalendarDays,
     Info,
     ChevronsUpDown,
 } from "lucide-react";
@@ -502,6 +508,32 @@ export const Playground = () => {
     </PaginationItem>
   </PaginationContent>
 </Pagination>`;
+        } else if (activeTab === "hover-card") {
+            code = `<HoverCard>
+  <HoverCardTrigger asChild>
+    <Button variant="link">@nextjs</Button>
+  </HoverCardTrigger>
+  <HoverCardContent className="w-80">
+    <div className="flex justify-between space-x-4">
+      <Avatar>
+        <AvatarImage src="https://github.com/vercel.png" />
+        <AvatarFallback>VC</AvatarFallback>
+      </Avatar>
+      <div className="space-y-1">
+        <h4 className="text-sm font-semibold">@nextjs</h4>
+        <p className="text-sm">
+          The React Framework – created and maintained by @vercel.
+        </p>
+        <div className="flex items-center pt-2">
+          <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
+          <span className="text-xs text-muted-foreground">
+            Joined December 2021
+          </span>
+        </div>
+      </div>
+    </div>
+  </HoverCardContent>
+</HoverCard>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -531,7 +563,7 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[155rem] grid-cols-[repeat(26,minmax(0,1fr))]">
+                        <TabsList className="grid w-full max-w-[160rem] grid-cols-[repeat(27,minmax(0,1fr))]">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
@@ -558,6 +590,7 @@ export const Playground = () => {
                             <TabsTrigger value="menubar">Menubar</TabsTrigger>
                             <TabsTrigger value="navigation-menu">Navigation Menu</TabsTrigger>
                             <TabsTrigger value="pagination">Pagination</TabsTrigger>
+                            <TabsTrigger value="hover-card">Hover Card</TabsTrigger>
                         </TabsList>
                     </div>
 
