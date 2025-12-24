@@ -36,6 +36,11 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
 
 export const Playground = () => {
     // Card State
@@ -63,6 +68,9 @@ export const Playground = () => {
 
     // Accordion State
     const [accordionItems, setAccordionItems] = useState(3);
+
+    // Popover State
+    const [popoverAlign, setPopoverAlign] = useState<"center" | "start" | "end">("center");
 
     const { toast } = useToast();
     const [activeTab, setActiveTab] = useState("card");
@@ -118,6 +126,22 @@ export const Playground = () => {
     </AccordionContent>
   </AccordionItem>
 </Accordion>`;
+        } else if (activeTab === "popover") {
+            code = `<Popover>
+  <PopoverTrigger asChild>
+    <Button variant="outline">Open Popover</Button>
+  </PopoverTrigger>
+  <PopoverContent className="w-80" align="${popoverAlign}">
+    <div className="grid gap-4">
+      <div className="space-y-2">
+        <h4 className="font-medium leading-none">Dimensions</h4>
+        <p className="text-sm text-muted-foreground">
+          Set the dimensions for the layer.
+        </p>
+      </div>
+    </div>
+  </PopoverContent>
+</Popover>`;
         }
 
         navigator.clipboard.writeText(code);
@@ -147,13 +171,14 @@ export const Playground = () => {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-xl grid-cols-6">
+                        <TabsList className="grid w-full max-w-2xl grid-cols-7">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>
                             <TabsTrigger value="toast">Toast</TabsTrigger>
                             <TabsTrigger value="dialog">Dialog</TabsTrigger>
                             <TabsTrigger value="accordion">Accordion</TabsTrigger>
+                            <TabsTrigger value="popover">Popover</TabsTrigger>
                         </TabsList>
                     </div>
 
@@ -608,6 +633,80 @@ export const Playground = () => {
                                             </AccordionItem>
                                         ))}
                                     </Accordion>
+                                </div>
+                            </div>
+                        </div>
+                    </TabsContent>
+                    {/* POPOVER TAB */}
+                    <TabsContent value="popover">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                            {/* Controls */}
+                            <div className="space-y-8 glass-panel p-8 rounded-2xl">
+                                <div className="space-y-4">
+                                    <Label className="flex items-center gap-2 mb-4">
+                                        <Maximize2 className="w-4 h-4" /> Align
+                                    </Label>
+                                    <RadioGroup
+                                        value={popoverAlign}
+                                        onValueChange={(v) => setPopoverAlign(v as "center" | "start" | "end")}
+                                        className="grid grid-cols-3 gap-4"
+                                    >
+                                        {["start", "center", "end"].map((align) => (
+                                            <div key={align} className="flex items-center space-x-2">
+                                                <RadioGroupItem value={align} id={`align-${align}`} />
+                                                <Label htmlFor={`align-${align}`} className="capitalize">{align}</Label>
+                                            </div>
+                                        ))}
+                                    </RadioGroup>
+                                </div>
+
+                                <div className="pt-4 flex gap-4">
+                                    <Button
+                                        onClick={() => setPopoverAlign("center")}
+                                        variant="outline"
+                                        className="flex-1"
+                                    >
+                                        Reset
+                                    </Button>
+                                    <Button onClick={copyCode} className="flex-1 gap-2">
+                                        <Copy className="w-4 h-4" />
+                                        Copy Code
+                                    </Button>
+                                </div>
+                            </div>
+
+                            {/* Preview */}
+                            <div className="flex items-center justify-center min-h-[400px] glass-panel rounded-2xl relative overflow-hidden p-8">
+                                <div className="absolute inset-0 grid-pattern opacity-50" />
+                                <div className="text-center">
+                                    <Popover>
+                                        <PopoverTrigger asChild>
+                                            <Button variant="outline">Open Popover</Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-80" align={popoverAlign}>
+                                            <div className="grid gap-4">
+                                                <div className="space-y-2">
+                                                    <h4 className="font-medium leading-none">Dimensions</h4>
+                                                    <p className="text-sm text-muted-foreground">
+                                                        Set the dimensions for the layer.
+                                                    </p>
+                                                </div>
+                                                <div className="grid gap-2">
+                                                    <div className="grid grid-cols-3 items-center gap-4">
+                                                        <Label htmlFor="width">Width</Label>
+                                                        <Input
+                                                            id="width"
+                                                            defaultValue="100%"
+                                                            className="col-span-2 h-8"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </PopoverContent>
+                                    </Popover>
+                                    <p className="mt-8 text-sm text-muted-foreground">
+                                        Click to see popover content
+                                    </p>
                                 </div>
                             </div>
                         </div>
