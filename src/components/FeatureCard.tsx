@@ -15,6 +15,7 @@ import { TableDemo } from "./features/TableDemo";
 import { SearchDemo } from "./features/SearchDemo";
 import { InfiniteScrollDemo } from "./features/InfiniteScrollDemo";
 import { ToastDemo } from "./features/ToastDemo";
+import { AccordionDemo } from "./features/AccordionDemo";
 import { FontFamilyDemo } from "./features/FontFamilyDemo";
 import { LayoutDemo } from "./features/LayoutDemo";
 import { InteractionDemo } from "./features/InteractionDemo";
@@ -42,6 +43,7 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
   const [showSearchDemo, setShowSearchDemo] = useState(false);
   const [showInfiniteDemo, setShowInfiniteDemo] = useState(false);
   const [showToastDemo, setShowToastDemo] = useState(false);
+  const [showAccordionDemo, setShowAccordionDemo] = useState(false);
   const [showLayoutDemo, setShowLayoutDemo] = useState(false);
   const [showInteractionDemo, setShowInteractionDemo] = useState(false);
   const [showStateDemo, setShowStateDemo] = useState(false);
@@ -125,6 +127,10 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       setShowToastDemo(true);
       return;
     }
+    if (feature.title.includes("Expandable")) {
+      setShowAccordionDemo(true);
+      return;
+    }
 
     // Layout & Navigation group
     if (feature.title.includes("Layout") || feature.title.includes("Grid") || feature.title.includes("Sidebar") || feature.title.includes("Panel") || feature.title.includes("Nav") || feature.title.includes("Header") || feature.title.includes("Footer") || feature.title.includes("List") || feature.title.includes("Table") || feature.title.includes("Sort") || feature.title.includes("Filter") || feature.title.includes("Search") || feature.title.includes("Infinite") || feature.title.includes("Lazy") || feature.title.includes("Orientation")) {
@@ -179,6 +185,9 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       )}
       {feature.title.includes("Toast") && (
         <ToastDemo open={showToastDemo} onOpenChange={setShowToastDemo} />
+      )}
+      {feature.title.includes("Expandable") && (
+        <AccordionDemo open={showAccordionDemo} onOpenChange={setShowAccordionDemo} />
       )}
 
       <LayoutDemo open={showLayoutDemo} onOpenChange={setShowLayoutDemo} title={feature.title} />

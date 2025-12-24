@@ -29,6 +29,8 @@ import SearchDemoCode from "./SearchDemo.tsx?raw";
 import InfiniteScrollDemoCode from "./InfiniteScrollDemo.tsx?raw";
 // @ts-ignore
 import ToastDemoCode from "./ToastDemo.tsx?raw";
+// @ts-ignore
+import AccordionDemoCode from "./AccordionDemo.tsx?raw";
 
 export const featureCodeMap: Record<string, string> = {
   // Specific Demos
@@ -47,7 +49,7 @@ export const featureCodeMap: Record<string, string> = {
   "Breadcrumb Navigation": LayoutDemoCode,
   "Layout Navigation": LayoutDemoCode,
   "Customizable Tables": TableDemoCode,
-  "Expandable Sections": LayoutDemoCode,
+  "Expandable Sections": AccordionDemoCode,
   "Filter & Sort Engine": TableDemoCode,
   "Smart Search with Highlighting": SearchDemoCode,
   "Infinite Scroll / Lazy Load": InfiniteScrollDemoCode,
