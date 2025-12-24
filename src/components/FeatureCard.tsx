@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ColorPickerDemo } from "./features/ColorPickerDemo";
 import { FeatureDetailsDialog } from "./features/FeatureDetailsDialog";
 import { FeatureSettingsDialog } from "./features/FeatureSettingsDialog";
+import { ThemeSwitcherDemo } from "./features/ThemeSwitcherDemo";
 import type { Tables } from "@/integrations/supabase/types";
 
 type Feature = Tables<"features">;
@@ -20,6 +21,7 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
   const [enabled, setEnabled] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [showColorPicker, setShowColorPicker] = useState(false);
+  const [showThemeSwitcher, setShowThemeSwitcher] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
@@ -60,17 +62,24 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       return;
     }
 
+    if (feature.title === "Theme Switcher" || feature.title === "Dark / Light / System Mode") {
+      setShowThemeSwitcher(true);
+      return;
+    }
+
     toast({
-      title: "Coming Soon",
-      description: "This feature demo is under development.",
+      title: "Demo Coming Soon",
+      description: "This feature is active! A visual demo is being built.",
     });
-    console.log("Try it clicked for", feature.title);
   };
 
   return (
     <>
       {feature.title === "Accent Color Picker" && (
         <ColorPickerDemo open={showColorPicker} onOpenChange={setShowColorPicker} />
+      )}
+      {(feature.title === "Theme Switcher" || feature.title === "Dark / Light / System Mode") && (
+        <ThemeSwitcherDemo open={showThemeSwitcher} onOpenChange={setShowThemeSwitcher} />
       )}
       <FeatureDetailsDialog open={showDetails} onOpenChange={setShowDetails} feature={feature} />
       <FeatureSettingsDialog open={showSettings} onOpenChange={setShowSettings} feature={feature} />
@@ -94,14 +103,7 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
           />
 
           {/* Premium indicator */}
-          {feature.is_premium && (
-            <div className="absolute top-4 right-4 z-20">
-              <div className="premium-badge flex items-center gap-1">
-                <Crown className="w-3 h-3" />
-                Pro
-              </div>
-            </div>
-          )}
+
 
           {/* Content */}
           <div className="relative z-10">

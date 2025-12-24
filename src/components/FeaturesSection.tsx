@@ -21,12 +21,17 @@ const categories = [
   { value: "meta", label: "Meta" },
 ];
 
+/* Existing imports */
+import { useToast } from "@/hooks/use-toast";
+
 export const FeaturesSection = () => {
   const [activeCategory, setActiveCategory] = useState("all");
   const [features, setFeatures] = useState<Feature[]>([]);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
+    /* fetchFeatures logic remains */
     const fetchFeatures = async () => {
       const { data, error } = await supabase
         .from("features")
@@ -43,6 +48,36 @@ export const FeaturesSection = () => {
     fetchFeatures();
   }, []);
 
+  const handleToggle = async (featureId: string, enabled: boolean) => {
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session) {
+      // Optional: Toast to inform user that setting won't persist across devices
+      console.log("User not logged in, setting local only");
+      return;
+    }
+
+    const { error } = await supabase
+      .from("user_feature_configs")
+      .upsert({
+        user_id: session.user.id,
+        feature_id: featureId,
+        enabled: enabled,
+        updated_at: new Date().toISOString(),
+      }, {
+        onConflict: 'user_id, feature_id'
+      });
+
+    if (error) {
+      console.error("Error saving feature config:", error);
+      toast({
+        title: "Error",
+        description: "Failed to save feature preference.",
+        variant: "destructive",
+      });
+    }
+  };
+
   const filteredFeatures =
     activeCategory === "all"
       ? features
@@ -52,7 +87,7 @@ export const FeaturesSection = () => {
     <section id="features" className="py-24 relative">
       {/* Background accent */}
       <div className="absolute inset-0 bg-radial-gradient opacity-50" />
-      
+
       <div className="container px-4 relative z-10">
         {/* Section Header */}
         <motion.div
@@ -92,7 +127,12 @@ export const FeaturesSection = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredFeatures.map((feature, index) => (
-              <FeatureCard key={feature.id} feature={feature} index={index} />
+              <FeatureCard
+                key={feature.id}
+                feature={feature}
+                index={index}
+                onToggle={handleToggle}
+              />
             ))}
           </div>
         )}
