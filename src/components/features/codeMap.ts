@@ -24,6 +24,8 @@ import HoverEffectsDemoCode from "./HoverEffectsDemo.tsx?raw";
 import BatterySaverDemoCode from "./BatterySaverDemo.tsx?raw";
 // @ts-ignore
 import TouchFriendlyDemoCode from "./TouchFriendlyDemo.tsx?raw";
+// @ts-ignore
+import SessionRestoreDemoCode from "./SessionRestoreDemo.tsx?raw";
 
 // @ts-ignore
 import ResizablePanelsDemoCode from "./ResizablePanelsDemo.tsx?raw";
@@ -89,7 +91,7 @@ export const featureCodeMap: Record<string, string> = {
   // State Demos
   "Auto-Save Indicator": StateDemoCode,
   "Draft Mode UI": StateDemoCode,
-  "Session Restore": StateDemoCode,
+  "Session Restore": SessionRestoreDemoCode,
   "Session Restore UI": StateDemoCode,
   "UI State Persistence": StateDemoCode,
   "State Persistence": StateDemoCode,
@@ -122,8 +124,11 @@ export const getFeatureCode = (title: string): string => {
   if (title.includes("High Contrast")) {
     return HighContrastDemoCode;
   }
-  if (title.includes("State") || title.includes("Save") || title.includes("Undo") || title.includes("Session") || title.includes("Draft") || title.includes("History") || title.includes("Offline") || title.includes("Network") || title.includes("Error") || title.includes("Flag") || title.includes("Role")) {
+  if (title.includes("State") || title.includes("Save") || title.includes("Undo") || title.includes("Draft") || title.includes("History") || title.includes("Offline") || title.includes("Network") || title.includes("Error") || title.includes("Flag") || title.includes("Role")) {
     return StateDemoCode;
+  }
+  if (title.includes("Session")) {
+    return SessionRestoreDemoCode;
   }
   if (title.includes("Battery")) {
     return BatterySaverDemoCode;

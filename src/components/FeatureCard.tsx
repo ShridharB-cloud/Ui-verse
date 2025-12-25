@@ -27,6 +27,7 @@ import { TimeBasedThemeDemo } from "./features/TimeBasedThemeDemo";
 import { HoverEffectsDemo } from "./features/HoverEffectsDemo";
 import { BatterySaverDemo } from "./features/BatterySaverDemo";
 import { TouchFriendlyDemo } from "./features/TouchFriendlyDemo";
+import { SessionRestoreDemo } from "./features/SessionRestoreDemo";
 import type { Tables } from "@/integrations/supabase/types";
 
 type Feature = Tables<"features">;
@@ -61,6 +62,7 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
   const [showHoverDemo, setShowHoverDemo] = useState(false);
   const [showBatteryDemo, setShowBatteryDemo] = useState(false);
   const [showTouchDemo, setShowTouchDemo] = useState(false);
+  const [showSessionDemo, setShowSessionDemo] = useState(false);
   const [showGenericDemo, setShowGenericDemo] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -189,7 +191,11 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       setShowBatteryDemo(true);
       return;
     }
-    if (feature.title.includes("State") || feature.title.includes("Save") || feature.title.includes("Undo") || feature.title.includes("Session") || feature.title.includes("Draft") || feature.title.includes("History") || feature.title.includes("Offline") || feature.title.includes("Network") || feature.title.includes("Error") || feature.title.includes("Flag") || feature.title.includes("Role")) {
+    if (feature.title.includes("Session") || feature.title.includes("Restore")) {
+      setShowSessionDemo(true);
+      return;
+    }
+    if (feature.title.includes("State") || feature.title.includes("Save") || feature.title.includes("Undo") || feature.title.includes("Draft") || feature.title.includes("History") || feature.title.includes("Offline") || feature.title.includes("Network") || feature.title.includes("Error") || feature.title.includes("Flag") || feature.title.includes("Role")) {
       setShowStateDemo(true);
       return;
     }
@@ -252,6 +258,7 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       <HoverEffectsDemo open={showHoverDemo} onOpenChange={setShowHoverDemo} />
       <BatterySaverDemo open={showBatteryDemo} onOpenChange={setShowBatteryDemo} />
       <TouchFriendlyDemo open={showTouchDemo} onOpenChange={setShowTouchDemo} />
+      <SessionRestoreDemo open={showSessionDemo} onOpenChange={setShowSessionDemo} />
       <GenericFeatureDemo open={showGenericDemo} onOpenChange={setShowGenericDemo} feature={feature} />
       <FeatureDetailsDialog open={showDetails} onOpenChange={setShowDetails} feature={feature} />
       <FeatureSettingsDialog open={showSettings} onOpenChange={setShowSettings} feature={feature} />
