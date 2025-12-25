@@ -28,6 +28,8 @@ import TouchFriendlyDemoCode from "./TouchFriendlyDemo.tsx?raw";
 import SessionRestoreDemoCode from "./SessionRestoreDemo.tsx?raw";
 // @ts-ignore
 import UIPersistenceDemoCode from "./UIPersistenceDemo.tsx?raw";
+// @ts-ignore
+import UndoRedoDemoCode from "./UndoRedoDemo.tsx?raw";
 
 // @ts-ignore
 import ResizablePanelsDemoCode from "./ResizablePanelsDemo.tsx?raw";
@@ -97,7 +99,7 @@ export const featureCodeMap: Record<string, string> = {
   "Session Restore UI": StateDemoCode,
   "UI State Persistence": UIPersistenceDemoCode,
   "State Persistence": StateDemoCode,
-  "Undo / Redo Stack": StateDemoCode,
+  "Undo / Redo Stack": UndoRedoDemoCode,
   "Battery Saver UI Mode": BatterySaverDemoCode,
   "Network-Aware UI": StateDemoCode,
   "Offline UI Indicator": StateDemoCode,
@@ -126,8 +128,11 @@ export const getFeatureCode = (title: string): string => {
   if (title.includes("High Contrast")) {
     return HighContrastDemoCode;
   }
-  if (title.includes("State") || title.includes("Save") || title.includes("Undo") || title.includes("Draft") || title.includes("History") || title.includes("Offline") || title.includes("Network") || title.includes("Error") || title.includes("Flag") || title.includes("Role")) {
+  if (title.includes("State") || title.includes("Save") || title.includes("Draft") || title.includes("History") || title.includes("Offline") || title.includes("Network") || title.includes("Error") || title.includes("Flag") || title.includes("Role")) {
     return StateDemoCode;
+  }
+  if (title.includes("Undo") || title.includes("Redo")) {
+    return UndoRedoDemoCode;
   }
   if (title.includes("Persistence")) {
     return UIPersistenceDemoCode;

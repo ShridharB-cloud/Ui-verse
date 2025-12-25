@@ -29,6 +29,7 @@ import { BatterySaverDemo } from "./features/BatterySaverDemo";
 import { TouchFriendlyDemo } from "./features/TouchFriendlyDemo";
 import { SessionRestoreDemo } from "./features/SessionRestoreDemo";
 import { UIPersistenceDemo } from "./features/UIPersistenceDemo";
+import { UndoRedoDemo } from "./features/UndoRedoDemo";
 import type { Tables } from "@/integrations/supabase/types";
 
 type Feature = Tables<"features">;
@@ -65,6 +66,7 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
   const [showTouchDemo, setShowTouchDemo] = useState(false);
   const [showSessionDemo, setShowSessionDemo] = useState(false);
   const [showPersistenceDemo, setShowPersistenceDemo] = useState(false);
+  const [showUndoRedoDemo, setShowUndoRedoDemo] = useState(false);
   const [showGenericDemo, setShowGenericDemo] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -201,6 +203,10 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       setShowPersistenceDemo(true);
       return;
     }
+    if (feature.title.includes("Undo") || feature.title.includes("Redo")) {
+      setShowUndoRedoDemo(true);
+      return;
+    }
     if (feature.title.includes("State") || feature.title.includes("Save") || feature.title.includes("Undo") || feature.title.includes("Draft") || feature.title.includes("History") || feature.title.includes("Offline") || feature.title.includes("Network") || feature.title.includes("Error") || feature.title.includes("Flag") || feature.title.includes("Role")) {
       setShowStateDemo(true);
       return;
@@ -266,6 +272,7 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       <TouchFriendlyDemo open={showTouchDemo} onOpenChange={setShowTouchDemo} />
       <SessionRestoreDemo open={showSessionDemo} onOpenChange={setShowSessionDemo} />
       <UIPersistenceDemo open={showPersistenceDemo} onOpenChange={setShowPersistenceDemo} />
+      <UndoRedoDemo open={showUndoRedoDemo} onOpenChange={setShowUndoRedoDemo} />
       <GenericFeatureDemo open={showGenericDemo} onOpenChange={setShowGenericDemo} feature={feature} />
       <FeatureDetailsDialog open={showDetails} onOpenChange={setShowDetails} feature={feature} />
       <FeatureSettingsDialog open={showSettings} onOpenChange={setShowSettings} feature={feature} />
