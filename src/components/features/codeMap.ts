@@ -18,6 +18,8 @@ import StateDemoCode from "./StateDemo.tsx?raw";
 import HighContrastDemoCode from "./HighContrastDemo.tsx?raw";
 // @ts-ignore
 import TimeBasedThemeDemoCode from "./TimeBasedThemeDemo.tsx?raw";
+// @ts-ignore
+import HoverEffectsDemoCode from "./HoverEffectsDemo.tsx?raw";
 
 // @ts-ignore
 import ResizablePanelsDemoCode from "./ResizablePanelsDemo.tsx?raw";
@@ -66,7 +68,7 @@ export const featureCodeMap: Record<string, string> = {
 
   // Interaction Demos
   "Cursor Interaction Effects": InteractionDemoCode,
-  "Hover-Based UI Highlights": InteractionDemoCode,
+  "Hover-Based UI Highlights": HoverEffectsDemoCode,
   "Focus Ring Manager": InteractionDemoCode,
   "Touch-Friendly Mode": InteractionDemoCode,
   "Smart Toast Notifications": ToastDemoCode,
@@ -104,8 +106,11 @@ export const getFeatureCode = (title: string): string => {
   if (title.includes("Layout") || title.includes("Grid") || title.includes("Sidebar") || title.includes("Panel") || title.includes("Nav") || title.includes("Header") || title.includes("Footer") || title.includes("List") || title.includes("Table") || title.includes("Sort") || title.includes("Filter") || title.includes("Search") || title.includes("Infinite") || title.includes("Lazy") || title.includes("Orientation")) {
     return LayoutDemoCode;
   }
-  if (title.includes("Interaction") || title.includes("Hover") || title.includes("Focus") || title.includes("Touch") || title.includes("Toast") || title.includes("Skeleton") || title.includes("Tooltip") || title.includes("Motion") || title.includes("Screen Reader") || title.includes("ARIA") || title.includes("Keyboard") || title.includes("Device") || title.includes("Help")) {
+  if (title.includes("Interaction") || title.includes("Focus") || title.includes("Touch") || title.includes("Toast") || title.includes("Skeleton") || title.includes("Tooltip") || title.includes("Motion") || title.includes("Screen Reader") || title.includes("ARIA") || title.includes("Keyboard") || title.includes("Device") || title.includes("Help")) {
     return InteractionDemoCode;
+  }
+  if (title.includes("Hover")) {
+    return HoverEffectsDemoCode;
   }
   if (title.includes("High Contrast")) {
     return HighContrastDemoCode;

@@ -24,6 +24,7 @@ import { InteractionDemo } from "./features/InteractionDemo";
 import { StateDemo } from "./features/StateDemo";
 import { HighContrastDemo } from "./features/HighContrastDemo";
 import { TimeBasedThemeDemo } from "./features/TimeBasedThemeDemo";
+import { HoverEffectsDemo } from "./features/HoverEffectsDemo";
 import type { Tables } from "@/integrations/supabase/types";
 
 type Feature = Tables<"features">;
@@ -55,6 +56,7 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
   const [showStateDemo, setShowStateDemo] = useState(false);
   const [showHighContrastDemo, setShowHighContrastDemo] = useState(false);
   const [showTimeDemo, setShowTimeDemo] = useState(false);
+  const [showHoverDemo, setShowHoverDemo] = useState(false);
   const [showGenericDemo, setShowGenericDemo] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -164,7 +166,11 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
     }
 
     // Interaction & UX group
-    if (feature.title.includes("Interaction") || feature.title.includes("Hover") || feature.title.includes("Focus") || feature.title.includes("Touch") || feature.title.includes("Toast") || feature.title.includes("Skeleton") || feature.title.includes("Tooltip") || feature.title.includes("High Contrast") || feature.title.includes("Motion") || feature.title.includes("Screen Reader") || feature.title.includes("ARIA") || feature.title.includes("Keyboard") || feature.title.includes("Device") || feature.title.includes("Help")) {
+    if (feature.title.includes("Hover")) {
+      setShowHoverDemo(true);
+      return;
+    }
+    if (feature.title.includes("Interaction") || feature.title.includes("Focus") || feature.title.includes("Touch") || feature.title.includes("Toast") || feature.title.includes("Skeleton") || feature.title.includes("Tooltip") || feature.title.includes("High Contrast") || feature.title.includes("Motion") || feature.title.includes("Screen Reader") || feature.title.includes("ARIA") || feature.title.includes("Keyboard") || feature.title.includes("Device") || feature.title.includes("Help")) {
       setShowInteractionDemo(true);
       return;
     }
@@ -227,6 +233,7 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       <StateDemo open={showStateDemo} onOpenChange={setShowStateDemo} title={feature.title} />
       <HighContrastDemo open={showHighContrastDemo} onOpenChange={setShowHighContrastDemo} />
       <TimeBasedThemeDemo open={showTimeDemo} onOpenChange={setShowTimeDemo} />
+      <HoverEffectsDemo open={showHoverDemo} onOpenChange={setShowHoverDemo} />
       <GenericFeatureDemo open={showGenericDemo} onOpenChange={setShowGenericDemo} feature={feature} />
       <FeatureDetailsDialog open={showDetails} onOpenChange={setShowDetails} feature={feature} />
       <FeatureSettingsDialog open={showSettings} onOpenChange={setShowSettings} feature={feature} />
