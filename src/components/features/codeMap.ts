@@ -26,6 +26,8 @@ import BatterySaverDemoCode from "./BatterySaverDemo.tsx?raw";
 import TouchFriendlyDemoCode from "./TouchFriendlyDemo.tsx?raw";
 // @ts-ignore
 import SessionRestoreDemoCode from "./SessionRestoreDemo.tsx?raw";
+// @ts-ignore
+import UIPersistenceDemoCode from "./UIPersistenceDemo.tsx?raw";
 
 // @ts-ignore
 import ResizablePanelsDemoCode from "./ResizablePanelsDemo.tsx?raw";
@@ -93,7 +95,7 @@ export const featureCodeMap: Record<string, string> = {
   "Draft Mode UI": StateDemoCode,
   "Session Restore": SessionRestoreDemoCode,
   "Session Restore UI": StateDemoCode,
-  "UI State Persistence": StateDemoCode,
+  "UI State Persistence": UIPersistenceDemoCode,
   "State Persistence": StateDemoCode,
   "Undo / Redo Stack": StateDemoCode,
   "Battery Saver UI Mode": BatterySaverDemoCode,
@@ -126,6 +128,9 @@ export const getFeatureCode = (title: string): string => {
   }
   if (title.includes("State") || title.includes("Save") || title.includes("Undo") || title.includes("Draft") || title.includes("History") || title.includes("Offline") || title.includes("Network") || title.includes("Error") || title.includes("Flag") || title.includes("Role")) {
     return StateDemoCode;
+  }
+  if (title.includes("Persistence")) {
+    return UIPersistenceDemoCode;
   }
   if (title.includes("Session")) {
     return SessionRestoreDemoCode;
