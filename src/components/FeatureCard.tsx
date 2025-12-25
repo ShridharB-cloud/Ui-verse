@@ -26,6 +26,7 @@ import { HighContrastDemo } from "./features/HighContrastDemo";
 import { TimeBasedThemeDemo } from "./features/TimeBasedThemeDemo";
 import { HoverEffectsDemo } from "./features/HoverEffectsDemo";
 import { BatterySaverDemo } from "./features/BatterySaverDemo";
+import { TouchFriendlyDemo } from "./features/TouchFriendlyDemo";
 import type { Tables } from "@/integrations/supabase/types";
 
 type Feature = Tables<"features">;
@@ -59,6 +60,7 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
   const [showTimeDemo, setShowTimeDemo] = useState(false);
   const [showHoverDemo, setShowHoverDemo] = useState(false);
   const [showBatteryDemo, setShowBatteryDemo] = useState(false);
+  const [showTouchDemo, setShowTouchDemo] = useState(false);
   const [showGenericDemo, setShowGenericDemo] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -177,6 +179,11 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       return;
     }
 
+    if (feature.title.includes("Touch")) {
+      setShowTouchDemo(true);
+      return;
+    }
+
     // State, Persistence & System Status group
     if (feature.title.includes("Battery")) {
       setShowBatteryDemo(true);
@@ -241,8 +248,10 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       <TimeBasedThemeDemo open={showTimeDemo} onOpenChange={setShowTimeDemo} />
       <HoverEffectsDemo open={showHoverDemo} onOpenChange={setShowHoverDemo} />
       <TimeBasedThemeDemo open={showTimeDemo} onOpenChange={setShowTimeDemo} />
+      <TimeBasedThemeDemo open={showTimeDemo} onOpenChange={setShowTimeDemo} />
       <HoverEffectsDemo open={showHoverDemo} onOpenChange={setShowHoverDemo} />
       <BatterySaverDemo open={showBatteryDemo} onOpenChange={setShowBatteryDemo} />
+      <TouchFriendlyDemo open={showTouchDemo} onOpenChange={setShowTouchDemo} />
       <GenericFeatureDemo open={showGenericDemo} onOpenChange={setShowGenericDemo} feature={feature} />
       <FeatureDetailsDialog open={showDetails} onOpenChange={setShowDetails} feature={feature} />
       <FeatureSettingsDialog open={showSettings} onOpenChange={setShowSettings} feature={feature} />
