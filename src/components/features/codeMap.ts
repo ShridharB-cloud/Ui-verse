@@ -11,7 +11,11 @@ import LayoutDemoCode from "./LayoutDemo.tsx?raw";
 // @ts-ignore
 import InteractionDemoCode from "./InteractionDemo.tsx?raw";
 // @ts-ignore
+import InteractionDemoCode from "./InteractionDemo.tsx?raw";
+// @ts-ignore
 import StateDemoCode from "./StateDemo.tsx?raw";
+// @ts-ignore
+import HighContrastDemoCode from "./HighContrastDemo.tsx?raw";
 
 // @ts-ignore
 import ResizablePanelsDemoCode from "./ResizablePanelsDemo.tsx?raw";
@@ -66,7 +70,7 @@ export const featureCodeMap: Record<string, string> = {
   "Smart Toast Notifications": ToastDemoCode,
   "Skeleton Loaders": InteractionDemoCode,
   "Tooltips with Delay": InteractionDemoCode,
-  "High Contrast Mode": InteractionDemoCode,
+  "High Contrast Mode": HighContrastDemoCode,
   "Reduced Motion Mode": InteractionDemoCode,
   "Keyboard Navigation": InteractionDemoCode,
   "Screen Reader Labels": InteractionDemoCode,
@@ -98,8 +102,11 @@ export const getFeatureCode = (title: string): string => {
   if (title.includes("Layout") || title.includes("Grid") || title.includes("Sidebar") || title.includes("Panel") || title.includes("Nav") || title.includes("Header") || title.includes("Footer") || title.includes("List") || title.includes("Table") || title.includes("Sort") || title.includes("Filter") || title.includes("Search") || title.includes("Infinite") || title.includes("Lazy") || title.includes("Orientation")) {
     return LayoutDemoCode;
   }
-  if (title.includes("Interaction") || title.includes("Hover") || title.includes("Focus") || title.includes("Touch") || title.includes("Toast") || title.includes("Skeleton") || title.includes("Tooltip") || title.includes("High Contrast") || title.includes("Motion") || title.includes("Screen Reader") || title.includes("ARIA") || title.includes("Keyboard") || title.includes("Device") || title.includes("Help")) {
+  if (title.includes("Interaction") || title.includes("Hover") || title.includes("Focus") || title.includes("Touch") || title.includes("Toast") || title.includes("Skeleton") || title.includes("Tooltip") || title.includes("Motion") || title.includes("Screen Reader") || title.includes("ARIA") || title.includes("Keyboard") || title.includes("Device") || title.includes("Help")) {
     return InteractionDemoCode;
+  }
+  if (title.includes("High Contrast")) {
+    return HighContrastDemoCode;
   }
   if (title.includes("State") || title.includes("Save") || title.includes("Undo") || title.includes("Session") || title.includes("Draft") || title.includes("History") || title.includes("Offline") || title.includes("Network") || title.includes("Battery") || title.includes("Error") || title.includes("Flag") || title.includes("Role")) {
     return StateDemoCode;

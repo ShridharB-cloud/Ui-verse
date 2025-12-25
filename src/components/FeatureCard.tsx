@@ -22,6 +22,7 @@ import { FontFamilyDemo } from "./features/FontFamilyDemo";
 import { LayoutDemo } from "./features/LayoutDemo";
 import { InteractionDemo } from "./features/InteractionDemo";
 import { StateDemo } from "./features/StateDemo";
+import { HighContrastDemo } from "./features/HighContrastDemo";
 import type { Tables } from "@/integrations/supabase/types";
 
 type Feature = Tables<"features">;
@@ -51,6 +52,7 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
   const [showLayoutDemo, setShowLayoutDemo] = useState(false);
   const [showInteractionDemo, setShowInteractionDemo] = useState(false);
   const [showStateDemo, setShowStateDemo] = useState(false);
+  const [showHighContrastDemo, setShowHighContrastDemo] = useState(false);
   const [showGenericDemo, setShowGenericDemo] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -143,6 +145,10 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       setShowErrorDemo(true);
       return;
     }
+    if (feature.title.includes("High Contrast")) {
+      setShowHighContrastDemo(true);
+      return;
+    }
 
     // Layout & Navigation group
     if (feature.title.includes("Layout") || feature.title.includes("Grid") || feature.title.includes("Sidebar") || feature.title.includes("Panel") || feature.title.includes("Nav") || feature.title.includes("Header") || feature.title.includes("Footer") || feature.title.includes("List") || feature.title.includes("Table") || feature.title.includes("Sort") || feature.title.includes("Filter") || feature.title.includes("Search") || feature.title.includes("Infinite") || feature.title.includes("Lazy") || feature.title.includes("Orientation")) {
@@ -211,6 +217,7 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       <LayoutDemo open={showLayoutDemo} onOpenChange={setShowLayoutDemo} title={feature.title} />
       <InteractionDemo open={showInteractionDemo} onOpenChange={setShowInteractionDemo} title={feature.title} />
       <StateDemo open={showStateDemo} onOpenChange={setShowStateDemo} title={feature.title} />
+      <HighContrastDemo open={showHighContrastDemo} onOpenChange={setShowHighContrastDemo} />
       <GenericFeatureDemo open={showGenericDemo} onOpenChange={setShowGenericDemo} feature={feature} />
       <FeatureDetailsDialog open={showDetails} onOpenChange={setShowDetails} feature={feature} />
       <FeatureSettingsDialog open={showSettings} onOpenChange={setShowSettings} feature={feature} />
