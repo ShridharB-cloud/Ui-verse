@@ -25,6 +25,7 @@ import { StateDemo } from "./features/StateDemo";
 import { HighContrastDemo } from "./features/HighContrastDemo";
 import { TimeBasedThemeDemo } from "./features/TimeBasedThemeDemo";
 import { HoverEffectsDemo } from "./features/HoverEffectsDemo";
+import { BatterySaverDemo } from "./features/BatterySaverDemo";
 import type { Tables } from "@/integrations/supabase/types";
 
 type Feature = Tables<"features">;
@@ -57,6 +58,7 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
   const [showHighContrastDemo, setShowHighContrastDemo] = useState(false);
   const [showTimeDemo, setShowTimeDemo] = useState(false);
   const [showHoverDemo, setShowHoverDemo] = useState(false);
+  const [showBatteryDemo, setShowBatteryDemo] = useState(false);
   const [showGenericDemo, setShowGenericDemo] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -176,7 +178,11 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
     }
 
     // State, Persistence & System Status group
-    if (feature.title.includes("State") || feature.title.includes("Save") || feature.title.includes("Undo") || feature.title.includes("Session") || feature.title.includes("Draft") || feature.title.includes("History") || feature.title.includes("Offline") || feature.title.includes("Network") || feature.title.includes("Battery") || feature.title.includes("Error") || feature.title.includes("Flag") || feature.title.includes("Role")) {
+    if (feature.title.includes("Battery")) {
+      setShowBatteryDemo(true);
+      return;
+    }
+    if (feature.title.includes("State") || feature.title.includes("Save") || feature.title.includes("Undo") || feature.title.includes("Session") || feature.title.includes("Draft") || feature.title.includes("History") || feature.title.includes("Offline") || feature.title.includes("Network") || feature.title.includes("Error") || feature.title.includes("Flag") || feature.title.includes("Role")) {
       setShowStateDemo(true);
       return;
     }
@@ -234,6 +240,9 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       <HighContrastDemo open={showHighContrastDemo} onOpenChange={setShowHighContrastDemo} />
       <TimeBasedThemeDemo open={showTimeDemo} onOpenChange={setShowTimeDemo} />
       <HoverEffectsDemo open={showHoverDemo} onOpenChange={setShowHoverDemo} />
+      <TimeBasedThemeDemo open={showTimeDemo} onOpenChange={setShowTimeDemo} />
+      <HoverEffectsDemo open={showHoverDemo} onOpenChange={setShowHoverDemo} />
+      <BatterySaverDemo open={showBatteryDemo} onOpenChange={setShowBatteryDemo} />
       <GenericFeatureDemo open={showGenericDemo} onOpenChange={setShowGenericDemo} feature={feature} />
       <FeatureDetailsDialog open={showDetails} onOpenChange={setShowDetails} feature={feature} />
       <FeatureSettingsDialog open={showSettings} onOpenChange={setShowSettings} feature={feature} />

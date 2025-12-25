@@ -20,6 +20,8 @@ import HighContrastDemoCode from "./HighContrastDemo.tsx?raw";
 import TimeBasedThemeDemoCode from "./TimeBasedThemeDemo.tsx?raw";
 // @ts-ignore
 import HoverEffectsDemoCode from "./HoverEffectsDemo.tsx?raw";
+// @ts-ignore
+import BatterySaverDemoCode from "./BatterySaverDemo.tsx?raw";
 
 // @ts-ignore
 import ResizablePanelsDemoCode from "./ResizablePanelsDemo.tsx?raw";
@@ -90,7 +92,7 @@ export const featureCodeMap: Record<string, string> = {
   "UI State Persistence": StateDemoCode,
   "State Persistence": StateDemoCode,
   "Undo / Redo Stack": StateDemoCode,
-  "Battery Saver UI Mode": StateDemoCode,
+  "Battery Saver UI Mode": BatterySaverDemoCode,
   "Network-Aware UI": StateDemoCode,
   "Offline UI Indicator": StateDemoCode,
   "Error Boundary UI": ErrorDemoCode,
@@ -115,8 +117,11 @@ export const getFeatureCode = (title: string): string => {
   if (title.includes("High Contrast")) {
     return HighContrastDemoCode;
   }
-  if (title.includes("State") || title.includes("Save") || title.includes("Undo") || title.includes("Session") || title.includes("Draft") || title.includes("History") || title.includes("Offline") || title.includes("Network") || title.includes("Battery") || title.includes("Error") || title.includes("Flag") || title.includes("Role")) {
+  if (title.includes("State") || title.includes("Save") || title.includes("Undo") || title.includes("Session") || title.includes("Draft") || title.includes("History") || title.includes("Offline") || title.includes("Network") || title.includes("Error") || title.includes("Flag") || title.includes("Role")) {
     return StateDemoCode;
+  }
+  if (title.includes("Battery")) {
+    return BatterySaverDemoCode;
   }
   if (title.includes("Time")) {
     return TimeBasedThemeDemoCode;
