@@ -23,6 +23,7 @@ import { LayoutDemo } from "./features/LayoutDemo";
 import { InteractionDemo } from "./features/InteractionDemo";
 import { StateDemo } from "./features/StateDemo";
 import { HighContrastDemo } from "./features/HighContrastDemo";
+import { TimeBasedThemeDemo } from "./features/TimeBasedThemeDemo";
 import type { Tables } from "@/integrations/supabase/types";
 
 type Feature = Tables<"features">;
@@ -53,6 +54,7 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
   const [showInteractionDemo, setShowInteractionDemo] = useState(false);
   const [showStateDemo, setShowStateDemo] = useState(false);
   const [showHighContrastDemo, setShowHighContrastDemo] = useState(false);
+  const [showTimeDemo, setShowTimeDemo] = useState(false);
   const [showGenericDemo, setShowGenericDemo] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -96,6 +98,11 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
 
     if (feature.title === "Theme Switcher" || feature.title === "Dark / Light / System Mode") {
       setShowThemeSwitcher(true);
+      return;
+    }
+
+    if (feature.title === "Time-Based Auto Theme") {
+      setShowTimeDemo(true);
       return;
     }
 
@@ -217,7 +224,9 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
       <LayoutDemo open={showLayoutDemo} onOpenChange={setShowLayoutDemo} title={feature.title} />
       <InteractionDemo open={showInteractionDemo} onOpenChange={setShowInteractionDemo} title={feature.title} />
       <StateDemo open={showStateDemo} onOpenChange={setShowStateDemo} title={feature.title} />
+      <StateDemo open={showStateDemo} onOpenChange={setShowStateDemo} title={feature.title} />
       <HighContrastDemo open={showHighContrastDemo} onOpenChange={setShowHighContrastDemo} />
+      <TimeBasedThemeDemo open={showTimeDemo} onOpenChange={setShowTimeDemo} />
       <GenericFeatureDemo open={showGenericDemo} onOpenChange={setShowGenericDemo} feature={feature} />
       <FeatureDetailsDialog open={showDetails} onOpenChange={setShowDetails} feature={feature} />
       <FeatureSettingsDialog open={showSettings} onOpenChange={setShowSettings} feature={feature} />
