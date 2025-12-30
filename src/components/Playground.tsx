@@ -952,7 +952,7 @@ export function DatePickerDemo() {
 
                 <Tabs defaultValue="card" onValueChange={setActiveTab} className="w-full">
                     <div className="flex justify-center mb-8">
-                        <TabsList className="grid w-full max-w-[220rem] grid-cols-[repeat(39,minmax(0,1fr))]">
+                        <TabsList className="flex flex-wrap justify-center gap-2 h-auto p-2 max-w-6xl">
                             <TabsTrigger value="card">Card</TabsTrigger>
                             <TabsTrigger value="button">Button</TabsTrigger>
                             <TabsTrigger value="input">Input</TabsTrigger>

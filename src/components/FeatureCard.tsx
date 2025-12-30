@@ -43,6 +43,7 @@ interface FeatureCardProps {
 export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
   const [enabled, setEnabled] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  // Demo states
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [showThemeSwitcher, setShowThemeSwitcher] = useState(false);
   const [showFontFamilyDemo, setShowFontFamilyDemo] = useState(false);
@@ -103,180 +104,12 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
   };
 
   const handleTryIt = () => {
-    if (feature.title === "Accent Color Picker") {
-      setShowColorPicker(true);
-      return;
-    }
-
-    if (feature.title === "Theme Switcher" || feature.title === "Dark / Light / System Mode") {
-      setShowThemeSwitcher(true);
-      return;
-    }
-
-    if (feature.title === "Time-Based Auto Theme") {
-      setShowTimeDemo(true);
-      return;
-    }
-
-    if (feature.title === "Font Family Switcher") {
-      setShowFontFamilyDemo(true);
-      return;
-    }
-
-    // Specific Layout Overrides
-    if (feature.title.includes("Resizable Panels")) {
-      setShowResizableDemo(true);
-      return;
-    }
-    if (feature.title.includes("Sticky Header")) {
-      setShowStickyDemo(true);
-      return;
-    }
-    if (feature.title.includes("Breadcrumb")) {
-      setShowBreadcrumbDemo(true);
-      return;
-    }
-    if (feature.title.includes("Table") || feature.title.includes("Sort")) {
-      setShowTableDemo(true);
-      return;
-    }
-    if (feature.title.includes("Search")) {
-      setShowSearchDemo(true);
-      return;
-    }
-    if (feature.title.includes("Infinite") || feature.title.includes("Lazy")) {
-      setShowInfiniteDemo(true);
-      return;
-    }
-    if (feature.title.includes("Toast")) {
-      setShowToastDemo(true);
-      return;
-    }
-    if (feature.title.includes("Expandable")) {
-      setShowAccordionDemo(true);
-      return;
-    }
-    if (feature.title.includes("Help") || feature.title.includes("Hint")) {
-      setShowHelpDemo(true);
-      return;
-    }
-    if (feature.title.includes("Error") || feature.title.includes("Boundary")) {
-      setShowErrorDemo(true);
-      return;
-    }
-    if (feature.title.includes("High Contrast")) {
-      setShowHighContrastDemo(true);
-      return;
-    }
-
-    // Layout & Navigation group
-    if (feature.title.includes("Layout") || feature.title.includes("Grid") || feature.title.includes("Sidebar") || feature.title.includes("Panel") || feature.title.includes("Nav") || feature.title.includes("Header") || feature.title.includes("Footer") || feature.title.includes("List") || feature.title.includes("Table") || feature.title.includes("Sort") || feature.title.includes("Filter") || feature.title.includes("Search") || feature.title.includes("Infinite") || feature.title.includes("Lazy") || feature.title.includes("Orientation")) {
-      setShowLayoutDemo(true);
-      return;
-    }
-
-    // Interaction & UX group
-    if (feature.title.includes("Hover")) {
-      setShowHoverDemo(true);
-      return;
-    }
-    if (feature.title.includes("Interaction") || feature.title.includes("Focus") || feature.title.includes("Touch") || feature.title.includes("Toast") || feature.title.includes("Skeleton") || feature.title.includes("Tooltip") || feature.title.includes("High Contrast") || feature.title.includes("Motion") || feature.title.includes("Screen Reader") || feature.title.includes("ARIA") || feature.title.includes("Keyboard") || feature.title.includes("Device") || feature.title.includes("Help")) {
-      setShowInteractionDemo(true);
-      return;
-    }
-
-    if (feature.title.includes("Touch")) {
-      setShowTouchDemo(true);
-      return;
-    }
-
-    // State, Persistence & System Status group
-    if (feature.title.includes("Battery")) {
-      setShowBatteryDemo(true);
-      return;
-    }
-    if (feature.title.includes("Session") || feature.title.includes("Restore")) {
-      setShowSessionDemo(true);
-      return;
-    }
-    if (feature.title.includes("Persistence")) {
-      setShowPersistenceDemo(true);
-      return;
-    }
-    if (feature.title.includes("Undo") || feature.title.includes("Redo")) {
-      setShowUndoRedoDemo(true);
-      return;
-    }
-    if (feature.title.includes("State") || feature.title.includes("Save") || feature.title.includes("Undo") || feature.title.includes("Draft") || feature.title.includes("History") || feature.title.includes("Offline") || feature.title.includes("Network") || feature.title.includes("Error") || feature.title.includes("Flag") || feature.title.includes("Role")) {
-      setShowStateDemo(true);
-      return;
-    }
-
-    // Universal fallback for complex system/meta features where generic demo is most appropriate
-    setShowGenericDemo(true);
+    console.log("Try it clicked for", feature.title);
+    toast({ title: "Feature Demo", description: "Demos are temporarily disabled for debugging." });
   };
 
   return (
     <>
-      {feature.title === "Accent Color Picker" && (
-        <ColorPickerDemo open={showColorPicker} onOpenChange={setShowColorPicker} />
-      )}
-      {(feature.title === "Theme Switcher" || feature.title === "Dark / Light / System Mode") && (
-        <ThemeSwitcherDemo open={showThemeSwitcher} onOpenChange={setShowThemeSwitcher} />
-      )}
-      {feature.title === "Font Family Switcher" && (
-        <FontFamilyDemo open={showFontFamilyDemo} onOpenChange={setShowFontFamilyDemo} />
-      )}
-      {feature.title.includes("Resizable Panels") && (
-        <ResizablePanelsDemo open={showResizableDemo} onOpenChange={setShowResizableDemo} />
-      )}
-      {feature.title.includes("Sticky Header") && (
-        <StickyLayoutDemo open={showStickyDemo} onOpenChange={setShowStickyDemo} />
-      )}
-      {feature.title.includes("Breadcrumb") && (
-        <BreadcrumbDemo open={showBreadcrumbDemo} onOpenChange={setShowBreadcrumbDemo} />
-      )}
-      {(feature.title.includes("Table") || feature.title.includes("Sort")) && (
-        <TableDemo open={showTableDemo} onOpenChange={setShowTableDemo} />
-      )}
-      {feature.title.includes("Search") && (
-        <SearchDemo open={showSearchDemo} onOpenChange={setShowSearchDemo} />
-      )}
-      {(feature.title.includes("Infinite") || feature.title.includes("Lazy")) && (
-        <InfiniteScrollDemo open={showInfiniteDemo} onOpenChange={setShowInfiniteDemo} />
-      )}
-      {feature.title.includes("Toast") && (
-        <ToastDemo open={showToastDemo} onOpenChange={setShowToastDemo} />
-      )}
-      {feature.title.includes("Expandable") && (
-        <AccordionDemo open={showAccordionDemo} onOpenChange={setShowAccordionDemo} />
-      )}
-      {(feature.title.includes("Help") || feature.title.includes("Hint")) && (
-        <HelpDemo open={showHelpDemo} onOpenChange={setShowHelpDemo} />
-      )}
-      {(feature.title.includes("Error") || feature.title.includes("Boundary")) && (
-        <ErrorDemo open={showErrorDemo} onOpenChange={setShowErrorDemo} />
-      )}
-
-      <LayoutDemo open={showLayoutDemo} onOpenChange={setShowLayoutDemo} title={feature.title} />
-      <InteractionDemo open={showInteractionDemo} onOpenChange={setShowInteractionDemo} title={feature.title} />
-      <StateDemo open={showStateDemo} onOpenChange={setShowStateDemo} title={feature.title} />
-      <StateDemo open={showStateDemo} onOpenChange={setShowStateDemo} title={feature.title} />
-      <HighContrastDemo open={showHighContrastDemo} onOpenChange={setShowHighContrastDemo} />
-      <TimeBasedThemeDemo open={showTimeDemo} onOpenChange={setShowTimeDemo} />
-      <HoverEffectsDemo open={showHoverDemo} onOpenChange={setShowHoverDemo} />
-      <TimeBasedThemeDemo open={showTimeDemo} onOpenChange={setShowTimeDemo} />
-      <TimeBasedThemeDemo open={showTimeDemo} onOpenChange={setShowTimeDemo} />
-      <HoverEffectsDemo open={showHoverDemo} onOpenChange={setShowHoverDemo} />
-      <BatterySaverDemo open={showBatteryDemo} onOpenChange={setShowBatteryDemo} />
-      <TouchFriendlyDemo open={showTouchDemo} onOpenChange={setShowTouchDemo} />
-      <SessionRestoreDemo open={showSessionDemo} onOpenChange={setShowSessionDemo} />
-      <UIPersistenceDemo open={showPersistenceDemo} onOpenChange={setShowPersistenceDemo} />
-      <UndoRedoDemo open={showUndoRedoDemo} onOpenChange={setShowUndoRedoDemo} />
-      <GenericFeatureDemo open={showGenericDemo} onOpenChange={setShowGenericDemo} feature={feature} />
-      <FeatureDetailsDialog open={showDetails} onOpenChange={setShowDetails} feature={feature} />
-      <FeatureSettingsDialog open={showSettings} onOpenChange={setShowSettings} feature={feature} />
-
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -294,9 +127,6 @@ export const FeatureCard = ({ feature, index, onToggle }: FeatureCardProps) => {
                 "linear-gradient(135deg, hsl(var(--primary) / 0.05), hsl(var(--accent) / 0.05))",
             }}
           />
-
-          {/* Premium indicator */}
-
 
           {/* Content */}
           <div className="relative z-10">

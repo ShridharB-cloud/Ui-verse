@@ -1,12 +1,8 @@
+@import "@fontsource/plus-jakarta-sans";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import "@fontsource/plus-jakarta-sans/400.css";
-@import "@fontsource/plus-jakarta-sans/500.css";
-@import "@fontsource/plus-jakarta-sans/600.css";
-@import "@fontsource/plus-jakarta-sans/700.css";
-@import "@fontsource/plus-jakarta-sans/800.css";
 
 @layer base {
   :root {
@@ -46,12 +42,12 @@
     /* Glass effects */
     --glass: 0 0% 100% / 0.75;
     --glass-border: 270 30% 70% / 0.2;
-    
+
     /* Gradients */
     --gradient-start: 270 50% 55%;
     --gradient-mid: 300 40% 50%;
     --gradient-end: 350 70% 60%;
-    
+
     /* Glow effects */
     --glow-primary: 270 50% 55%;
     --glow-accent: 350 70% 60%;
@@ -92,12 +88,12 @@
     /* Glass effects - dark mode */
     --glass: 240 10% 8% / 0.7;
     --glass-border: 270 30% 40% / 0.15;
-    
+
     /* Gradients - dark mode */
     --gradient-start: 270 60% 65%;
     --gradient-mid: 300 50% 55%;
     --gradient-end: 350 65% 60%;
-    
+
     /* Glow effects */
     --glow-primary: 270 60% 65%;
     --glow-accent: 350 65% 60%;
@@ -119,6 +115,7 @@
 }
 
 @layer components {
+
   /* Glassmorphism panels */
   .glass-panel {
     background: hsl(var(--glass));
@@ -138,13 +135,13 @@
 
   /* Glow effects */
   .glow-primary {
-    box-shadow: 
+    box-shadow:
       0 0 40px -10px hsl(var(--glow-primary) / 0.4),
       0 0 80px -20px hsl(var(--glow-primary) / 0.2);
   }
 
   .glow-accent {
-    box-shadow: 
+    box-shadow:
       0 0 40px -10px hsl(var(--glow-accent) / 0.4),
       0 0 80px -20px hsl(var(--glow-accent) / 0.2);
   }
@@ -155,12 +152,10 @@
 
   /* Gradient text */
   .text-gradient {
-    background: linear-gradient(
-      135deg,
-      hsl(var(--gradient-start)),
-      hsl(var(--gradient-mid)),
-      hsl(var(--gradient-end))
-    );
+    background: linear-gradient(135deg,
+        hsl(var(--gradient-start)),
+        hsl(var(--gradient-mid)),
+        hsl(var(--gradient-end)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -179,12 +174,10 @@
     inset: 0;
     padding: 1px;
     border-radius: inherit;
-    background: linear-gradient(
-      135deg,
-      hsl(var(--gradient-start)),
-      hsl(var(--gradient-mid)),
-      hsl(var(--gradient-end))
-    );
+    background: linear-gradient(135deg,
+        hsl(var(--gradient-start)),
+        hsl(var(--gradient-mid)),
+        hsl(var(--gradient-end)));
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
@@ -217,23 +210,21 @@
   /* Hero buttons */
   .btn-hero {
     @apply relative overflow-hidden px-8 py-4 rounded-xl font-semibold text-lg;
-    background: linear-gradient(
-      135deg,
-      hsl(var(--gradient-start)),
-      hsl(var(--gradient-mid)),
-      hsl(var(--gradient-end))
-    );
+    background: linear-gradient(135deg,
+        hsl(var(--gradient-start)),
+        hsl(var(--gradient-mid)),
+        hsl(var(--gradient-end)));
     background-size: 200% 200%;
     animation: gradient-shift 6s ease infinite;
     @apply text-white;
     @apply transition-all duration-300 hover:scale-105;
-    box-shadow: 
+    box-shadow:
       0 0 30px -5px hsl(var(--glow-primary) / 0.4),
       0 4px 20px -5px hsl(var(--glow-accent) / 0.3);
   }
 
   .btn-hero:hover {
-    box-shadow: 
+    box-shadow:
       0 0 50px -5px hsl(var(--glow-primary) / 0.5),
       0 8px 30px -5px hsl(var(--glow-accent) / 0.4);
   }
@@ -251,27 +242,21 @@
   }
 
   .orb-primary {
-    background: radial-gradient(
-      circle,
-      hsl(var(--gradient-start) / 0.4),
-      hsl(var(--gradient-start) / 0)
-    );
+    background: radial-gradient(circle,
+        hsl(var(--gradient-start) / 0.4),
+        hsl(var(--gradient-start) / 0));
   }
 
   .orb-accent {
-    background: radial-gradient(
-      circle,
-      hsl(var(--gradient-end) / 0.35),
-      hsl(var(--gradient-end) / 0)
-    );
+    background: radial-gradient(circle,
+        hsl(var(--gradient-end) / 0.35),
+        hsl(var(--gradient-end) / 0));
   }
 
   .orb-mid {
-    background: radial-gradient(
-      circle,
-      hsl(var(--gradient-mid) / 0.3),
-      hsl(var(--gradient-mid) / 0)
-    );
+    background: radial-gradient(circle,
+        hsl(var(--gradient-mid) / 0.3),
+        hsl(var(--gradient-mid) / 0));
   }
 
   /* Status badges */
@@ -293,11 +278,9 @@
 
   /* Premium badge */
   .premium-badge {
-    background: linear-gradient(
-      135deg,
-      hsl(var(--gradient-start)),
-      hsl(var(--gradient-end))
-    );
+    background: linear-gradient(135deg,
+        hsl(var(--gradient-start)),
+        hsl(var(--gradient-end)));
     @apply text-white text-xs font-semibold px-2 py-0.5 rounded-full;
   }
 
@@ -334,7 +317,7 @@
 
   /* Grid pattern */
   .grid-pattern {
-    background-image: 
+    background-image:
       linear-gradient(hsl(var(--foreground) / 0.03) 1px, transparent 1px),
       linear-gradient(90deg, hsl(var(--foreground) / 0.03) 1px, transparent 1px);
     background-size: 60px 60px;
@@ -342,25 +325,33 @@
 
   /* Radial gradient bg */
   .bg-radial-gradient {
-    background: radial-gradient(
-      ellipse 80% 50% at 50% -20%,
-      hsl(var(--gradient-start) / 0.15),
-      transparent
-    );
+    background: radial-gradient(ellipse 80% 50% at 50% -20%,
+        hsl(var(--gradient-start) / 0.15),
+        transparent);
+  }
+
+  /* Z-index utilities */
+  .-z-1 {
+    z-index: -1;
   }
 }
 
 /* Animations */
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translate(0, 0) scale(1);
   }
+
   25% {
     transform: translate(5%, 8%) scale(1.05);
   }
+
   50% {
     transform: translate(-3%, 12%) scale(0.98);
   }
+
   75% {
     transform: translate(-6%, 4%) scale(1.02);
   }
@@ -370,19 +361,24 @@
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.5;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.8;
     transform: scale(1.05);
@@ -393,6 +389,7 @@
   0% {
     background-position: -200% 0;
   }
+
   100% {
     background-position: 200% 0;
   }
@@ -403,6 +400,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -414,6 +412,7 @@
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
