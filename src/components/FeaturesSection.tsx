@@ -96,7 +96,7 @@ export const FeaturesSection = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="heading-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4">
             Feature <span className="text-gradient">Encyclopedia</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
